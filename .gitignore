@@ -1,0 +1,7 @@
+[Dd]ebug/
+[Rr]elease/
+.vs/
+*.iobj
+*.ipdb
+*.pdb
+*.user

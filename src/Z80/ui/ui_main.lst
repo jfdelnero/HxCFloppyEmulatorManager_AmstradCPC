@@ -1,0 +1,267 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.6.0 #9615 (MINGW64)
+                              4 ;--------------------------------------------------------
+                              5 	.module ui_main
+                              6 	.optsdcc -mz80
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _main
+                             12 	.globl _ShowBuzzerSettings
+                             13 	.globl _ShowQuit
+                             14 	.globl _Select
+                             15 	.globl _Right
+                             16 	.globl _Left
+                             17 	.globl _Down
+                             18 	.globl _Up
+                             19 	.globl _InitNavigate
+                             20 	.globl _BrowsePage
+                             21 	.globl _BrowsePath
+                             22 	.globl _InitProgram
+                             23 	.globl _ShowHelp
+                             24 	.globl _NextSlot
+                             25 	.globl _PrevSlot
+                             26 	.globl _ShowSlots
+                             27 ;--------------------------------------------------------
+                             28 ; special function registers
+                             29 ;--------------------------------------------------------
+                             30 ;--------------------------------------------------------
+                             31 ; ram data
+                             32 ;--------------------------------------------------------
+                             33 	.area _DATA
+                             34 ;--------------------------------------------------------
+                             35 ; ram data
+                             36 ;--------------------------------------------------------
+                             37 	.area _INITIALIZED
+                             38 ;--------------------------------------------------------
+                             39 ; absolute external ram data
+                             40 ;--------------------------------------------------------
+                             41 	.area _DABS (ABS)
+                             42 ;--------------------------------------------------------
+                             43 ; global & static initialisations
+                             44 ;--------------------------------------------------------
+                             45 	.area _HOME
+                             46 	.area _GSINIT
+                             47 	.area _GSFINAL
+                             48 	.area _GSINIT
+                             49 ;--------------------------------------------------------
+                             50 ; Home
+                             51 ;--------------------------------------------------------
+                             52 	.area _HOME
+                             53 	.area _HOME
+                             54 ;--------------------------------------------------------
+                             55 ; code
+                             56 ;--------------------------------------------------------
+                             57 	.area _CODE
+                             58 ;ui_main.c:20: void main()
+                             59 ;	---------------------------------
+                             60 ; Function main
+                             61 ; ---------------------------------
+   0000                      62 _main::
+   0000 3B            [ 6]   63 	dec	sp
+                             64 ;ui_main.c:52: __endasm;
+   0001 CD 12 B9      [17]   65 	call	0xB912
+   0004 32rFDr00      [13]   66 	ld	( from_rom_select_address + 1 ), a
+   0007 CD 03 B9      [17]   67 	call	0xB903
+   000A 32r00r01      [13]   68 	ld	( from_rom_previous_state + 1 ), a
+   000D CD 11 BC      [17]   69 	call	0xBC11
+   0010 F5            [11]   70 	push	af
+a  0011               [11]   71 	ld	a, 3
+   0011 CD 35 BC      [17]   72 	call	0xBC35
+   0014 C5            [11]   73 	push	bc
+a  0015               [11]   74 	ld	a, 2
+   0015 CD 35 BC      [17]   75 	call	0xBC35
+   0018 C5            [11]   76 	push	bc
+a  0019               [11]   77 	ld	a, 1
+   0019 CD 35 BC      [17]   78 	call	0xBC35
+   001C C5            [11]   79 	push	bc
+   001D AF            [ 4]   80 	xor	a
+   001E CD 35 BC      [17]   81 	call	0xBC35
+   0021 C5            [11]   82 	push	bc
+   0022 CD 3B BC      [17]   83 	call	0xBC3B
+   0025 C5            [11]   84 	push	bc
+   0026 CD 42 BB      [17]   85 	call	0xBB42
+   0029 E5            [11]   86 	push	hl
+q  002A                      87 	ld	h, &12 ; first repeat, default is &1E
+q  002A                      88 	ld	l, &02 ; repeat speed, default is &02
+   002A CD 3F BB      [17]   89 	call	0xBB3F
+                             90 ;ui_main.c:54: InitProgram();
+   002D CDr00r00      [17]   91 	call	_InitProgram
+                             92 ;ui_main.c:56: strcpy((char*)BROWSE_CURRENTPATH, "/");
+   0030 11 00 24      [10]   93 	ld	de,#0x2400
+   0033 21r21r01      [10]   94 	ld	hl,#___str_0
+   0036 AF            [ 4]   95 	xor	a, a
+   0037                      96 00199$:
+   0037 BE            [ 7]   97 	cp	a, (hl)
+   0038 ED A0         [16]   98 	ldi
+   003A 20 FB         [12]   99 	jr	NZ, 00199$
+                            100 ;ui_main.c:57: InitNavigate();
+   003C CDr00r00      [17]  101 	call	_InitNavigate
+                            102 ;ui_main.c:58: BrowsePath();
+   003F CDr00r00      [17]  103 	call	_BrowsePath
+                            104 ;ui_main.c:60: isQuit = 0;
+   0042 FD 21 00 00   [14]  105 	ld	iy,#0
+   0046 FD 39         [15]  106 	add	iy,sp
+   0048 FD 36 00 00   [19]  107 	ld	0 (iy),#0x00
+                            108 ;ui_main.c:62: while(isQuit==0)
+   004C                     109 00138$:
+   004C FD 21 00 00   [14]  110 	ld	iy,#0
+   0050 FD 39         [15]  111 	add	iy,sp
+   0052 FD 7E 00      [19]  112 	ld	a,0 (iy)
+   0055 B7            [ 4]  113 	or	a, a
+   0056 C2rFCr00      [10]  114 	jp	NZ,00140$
+                            115 ;ui_main.c:64: key = WaitKey();
+   0059 CDr00r00      [17]  116 	call	_WaitKey
+                            117 ;ui_main.c:66: if (key==0xF0) // Up
+   005C 7D            [ 4]  118 	ld	a,l
+   005D D6 F0         [ 7]  119 	sub	a, #0xf0
+   005F 20 05         [12]  120 	jr	NZ,00136$
+                            121 ;ui_main.c:68: Up();
+   0061 CDr00r00      [17]  122 	call	_Up
+   0064 18 E6         [12]  123 	jr	00138$
+   0066                     124 00136$:
+                            125 ;ui_main.c:70: else if (key==0xF1) // Down
+   0066 7D            [ 4]  126 	ld	a,l
+   0067 D6 F1         [ 7]  127 	sub	a, #0xf1
+   0069 20 05         [12]  128 	jr	NZ,00133$
+                            129 ;ui_main.c:72: Down();
+   006B CDr00r00      [17]  130 	call	_Down
+   006E 18 DC         [12]  131 	jr	00138$
+   0070                     132 00133$:
+                            133 ;ui_main.c:74: else if (key==0xF2) // Left
+   0070 7D            [ 4]  134 	ld	a,l
+   0071 D6 F2         [ 7]  135 	sub	a, #0xf2
+   0073 20 05         [12]  136 	jr	NZ,00130$
+                            137 ;ui_main.c:76: Left();
+   0075 CDr00r00      [17]  138 	call	_Left
+   0078 18 D2         [12]  139 	jr	00138$
+   007A                     140 00130$:
+                            141 ;ui_main.c:78: else if (key==0xF3) // Right
+   007A 7D            [ 4]  142 	ld	a,l
+   007B D6 F3         [ 7]  143 	sub	a, #0xf3
+   007D 20 05         [12]  144 	jr	NZ,00127$
+                            145 ;ui_main.c:80: Right();
+   007F CDr00r00      [17]  146 	call	_Right
+   0082 18 C8         [12]  147 	jr	00138$
+   0084                     148 00127$:
+                            149 ;ui_main.c:82: else if (key==0xFA) // Ctrl+Left
+   0084 7D            [ 4]  150 	ld	a,l
+   0085 D6 FA         [ 7]  151 	sub	a, #0xfa
+   0087 20 05         [12]  152 	jr	NZ,00124$
+                            153 ;ui_main.c:84: PrevSlot();
+   0089 CDr00r00      [17]  154 	call	_PrevSlot
+   008C 18 BE         [12]  155 	jr	00138$
+   008E                     156 00124$:
+                            157 ;ui_main.c:86: else if (key==0xFB) // Ctrl+Right
+   008E 7D            [ 4]  158 	ld	a,l
+   008F D6 FB         [ 7]  159 	sub	a, #0xfb
+   0091 20 05         [12]  160 	jr	NZ,00121$
+                            161 ;ui_main.c:88: NextSlot();
+   0093 CDr00r00      [17]  162 	call	_NextSlot
+   0096 18 B4         [12]  163 	jr	00138$
+   0098                     164 00121$:
+                            165 ;ui_main.c:90: else if ((key==0x20)||(key==0x8B)||(key==0x0D)) // Space, Enter, Return
+   0098 7D            [ 4]  166 	ld	a,l
+   0099 FE 20         [ 7]  167 	cp	a,#0x20
+   009B 28 08         [12]  168 	jr	Z,00115$
+   009D FE 8B         [ 7]  169 	cp	a,#0x8b
+   009F 28 04         [12]  170 	jr	Z,00115$
+   00A1 D6 0D         [ 7]  171 	sub	a, #0x0d
+   00A3 20 05         [12]  172 	jr	NZ,00116$
+   00A5                     173 00115$:
+                            174 ;ui_main.c:92: Select();
+   00A5 CDr00r00      [17]  175 	call	_Select
+   00A8 18 A2         [12]  176 	jr	00138$
+   00AA                     177 00116$:
+                            178 ;ui_main.c:94: else if( (key=='h')||(key=='h'))
+   00AA 7D            [ 4]  179 	ld	a,l
+   00AB D6 68         [ 7]  180 	sub	a, #0x68
+   00AD 20 04         [12]  181 	jr	NZ,00216$
+   00AF 3E 01         [ 7]  182 	ld	a,#0x01
+   00B1 18 01         [12]  183 	jr	00217$
+   00B3                     184 00216$:
+   00B3 AF            [ 4]  185 	xor	a,a
+   00B4                     186 00217$:
+   00B4 B7            [ 4]  187 	or	a, a
+   00B5 20 03         [12]  188 	jr	NZ,00111$
+   00B7 B7            [ 4]  189 	or	a, a
+   00B8 28 09         [12]  190 	jr	Z,00112$
+   00BA                     191 00111$:
+                            192 ;ui_main.c:96: ShowHelp();
+   00BA CDr00r00      [17]  193 	call	_ShowHelp
+                            194 ;ui_main.c:97: BrowsePage();	
+   00BD CDr00r00      [17]  195 	call	_BrowsePage
+   00C0 C3r4Cr00      [10]  196 	jp	00138$
+   00C3                     197 00112$:
+                            198 ;ui_main.c:99: else if( (key=='s')||(key=='S'))
+   00C3 7D            [ 4]  199 	ld	a,l
+   00C4 FE 73         [ 7]  200 	cp	a,#0x73
+   00C6 28 04         [12]  201 	jr	Z,00107$
+   00C8 D6 53         [ 7]  202 	sub	a, #0x53
+   00CA 20 09         [12]  203 	jr	NZ,00108$
+   00CC                     204 00107$:
+                            205 ;ui_main.c:101: ShowSlots();
+   00CC CDr00r00      [17]  206 	call	_ShowSlots
+                            207 ;ui_main.c:102: BrowsePage();	
+   00CF CDr00r00      [17]  208 	call	_BrowsePage
+   00D2 C3r4Cr00      [10]  209 	jp	00138$
+   00D5                     210 00108$:
+                            211 ;ui_main.c:104: else if( (key=='b')||(key=='B'))
+   00D5 7D            [ 4]  212 	ld	a,l
+   00D6 FE 62         [ 7]  213 	cp	a,#0x62
+   00D8 28 04         [12]  214 	jr	Z,00103$
+   00DA D6 42         [ 7]  215 	sub	a, #0x42
+   00DC 20 09         [12]  216 	jr	NZ,00104$
+   00DE                     217 00103$:
+                            218 ;ui_main.c:106: ShowBuzzerSettings();
+   00DE CDr00r00      [17]  219 	call	_ShowBuzzerSettings
+                            220 ;ui_main.c:107: BrowsePage();	
+   00E1 CDr00r00      [17]  221 	call	_BrowsePage
+   00E4 C3r4Cr00      [10]  222 	jp	00138$
+   00E7                     223 00104$:
+                            224 ;ui_main.c:109: else if(key==0xFC) // ESC
+   00E7 7D            [ 4]  225 	ld	a,l
+   00E8 D6 FC         [ 7]  226 	sub	a, #0xfc
+   00EA C2r4Cr00      [10]  227 	jp	NZ,00138$
+                            228 ;ui_main.c:111: isQuit = ShowQuit();
+   00ED CDr00r00      [17]  229 	call	_ShowQuit
+   00F0 FD 21 00 00   [14]  230 	ld	iy,#0
+   00F4 FD 39         [15]  231 	add	iy,sp
+   00F6 FD 75 00      [19]  232 	ld	0 (iy),l
+   00F9 C3r4Cr00      [10]  233 	jp	00138$
+   00FC                     234 00140$:
+                            235 ;ui_main.c:141: __endasm;
+   00FC                     236 	from_rom_select_address:
+a  00FC               [10]  237 	ld	c, 0
+   00FC CD 0F B9      [17]  238 	call	0xB90F
+   00FF                     239 	from_rom_previous_state:
+a  00FF               [17]  240 	ld	a, 0
+   00FF CD 0C B9      [17]  241 	call	0xB90C
+   0102 E1            [10]  242 	pop	hl
+   0103 CD 3F BB      [17]  243 	call	0xBB3F
+   0106 C1            [10]  244 	pop	bc
+   0107 CD 38 BC      [17]  245 	call	0xBC38
+   010A C1            [10]  246 	pop	bc
+   010B AF            [ 4]  247 	xor	a
+   010C CD 32 BC      [17]  248 	call	0xBC32
+   010F C1            [10]  249 	pop	bc
+a  0110               [10]  250 	ld	a, 1
+   0110 CD 32 BC      [17]  251 	call	0xBC32
+   0113 C1            [10]  252 	pop	bc
+a  0114               [10]  253 	ld	a, 2
+   0114 CD 32 BC      [17]  254 	call	0xBC32
+   0117 C1            [10]  255 	pop	bc
+a  0118               [10]  256 	ld	a, 3
+   0118 CD 32 BC      [17]  257 	call	0xBC32
+   011B F1            [10]  258 	pop	af
+   011C CD 0E BC      [17]  259 	call	0xBC0E
+   011F 33            [ 6]  260 	inc	sp
+   0120 C9            [10]  261 	ret
+   0121                     262 ___str_0:
+   0121 2F                  263 	.ascii "/"
+   0122 00                  264 	.db 0x00
+                            265 	.area _CODE
+                            266 	.area _INITIALIZER
+                            267 	.area _CABS (ABS)
