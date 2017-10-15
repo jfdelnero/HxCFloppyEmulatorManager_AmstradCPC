@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:36 2017
+; This file was generated Sun Oct 15 00:38:05 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -233,10 +233,10 @@ _open_directory_00102:
 ;fat_filelib.c:174: if (fatfs_get_file_entry(&_fs, startcluster, currentfolder,&sfEntry))
 	ld	hl, &0006
 	add	hl,sp
-	ld	(ix-6 ),l
-	ld	(ix-5 ),h
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	(ix-2 ),l
+	ld	(ix-1 ),h
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	de,_currentfolder
 	push	bc
 	push	hl
@@ -260,8 +260,8 @@ _open_directory_00102:
 	or	l
 	jp	Z,_open_directory_00107
 ;fat_filelib.c:177: if (fatfs_entry_is_dir(&sfEntry))
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	push	bc
 	push	hl
 	call	_fatfs_entry_is_dir
@@ -271,8 +271,8 @@ _open_directory_00102:
 	or	l
 	jr	Z,_open_directory_00104
 ;fat_filelib.c:178: startcluster = (((unsigned long)ENDIAN_16BIT(sfEntry.FstClusHI))<<16) | ENDIAN_16BIT(sfEntry.FstClusLO);
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	de,  &0014
 	add	hl, de
 	ld	e,(hl)
@@ -281,21 +281,21 @@ _open_directory_00102:
 	ld	l, &00
 	ld	d, &00
 	push	af
-	ld	(ix-4 ),e
-	ld	(ix-3 ),h
-	ld	(ix-2 ),l
-	ld	(ix-1 ),d
+	ld	(ix-6 ),e
+	ld	(ix-5 ),h
+	ld	(ix-4 ),l
+	ld	(ix-3 ),d
 	pop	af
 	ld	a, &10
 _open_directory_00133:
-	sla	(ix-4 )
+	sla	(ix-6 )
+	rl	(ix-5 )
+	rl	(ix-4 )
 	rl	(ix-3 )
-	rl	(ix-2 )
-	rl	(ix-1 )
 	dec	a
 	jr	NZ,_open_directory_00133
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	de,  &001A
 	add	hl, de
 	ld	e,(hl)
@@ -304,16 +304,16 @@ _open_directory_00133:
 	ld	l, &00
 	ld	d, &00
 	ld	a,e
-	or	 (ix-4 )
+	or	 (ix-6 )
 	ld	e,a
 	ld	a,h
-	or	 (ix-3 )
+	or	 (ix-5 )
 	ld	h,a
 	ld	a,l
-	or	 (ix-2 )
+	or	 (ix-4 )
 	ld	l,a
 	ld	a,d
-	or	 (ix-1 )
+	or	 (ix-3 )
 	ld	d,a
 	ld	(ix-42 ),e
 	ld	(ix-41 ),h
@@ -675,15 +675,15 @@ __read_sector:
 	pop	af
 	pop	af
 	pop	af
-	ld	(ix-17 ),d
-	ld	(ix-18 ),e
-	ld	(ix-19 ),h
-	ld	(ix-20 ),l
-	ld	l,(ix-18 )
-	ld	h,(ix-17 )
+	ld	(ix-13 ),d
+	ld	(ix-14 ),e
+	ld	(ix-15 ),h
+	ld	(ix-16 ),l
+	ld	l,(ix-14 )
+	ld	h,(ix-13 )
 	push	hl
-	ld	l,(ix-20 )
-	ld	h,(ix-19 )
+	ld	l,(ix-16 )
+	ld	h,(ix-15 )
 	push	hl
 	call	__mullong_rrx_s
 	pop	af
@@ -702,17 +702,17 @@ __read_sector:
 	ld	a,(ix+9 )
 	sbc	a, d
 	ld	d,a
-	ld	(ix-16 ),l
-	ld	(ix-15 ),h
-	ld	(ix-14 ),e
-	ld	(ix-13 ),d
+	ld	(ix-12 ),l
+	ld	(ix-11 ),h
+	ld	(ix-10 ),e
+	ld	(ix-9 ),d
 ;fat_filelib.c:279: if (ClusterIdx == file->last_fat_lookup.ClusterIdx)
 	ld	a,(ix+4 )
-	ld	(ix-8 ),a
+	ld	(ix-2 ),a
 	ld	a,(ix+5 )
-	ld	(ix-7 ),a
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	(ix-1 ),a
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	de,  &0121
 	add	hl, de
 	ld	c,(hl)
@@ -722,41 +722,41 @@ __read_sector:
 	ld	e,(hl)
 	inc	hl
 	ld	d,(hl)
-	ld	a,(ix-20 )
+	ld	a,(ix-16 )
 	sub	 c
 	jr	NZ,_read_sector_00111
-	ld	a,(ix-19 )
+	ld	a,(ix-15 )
 	sub	 b
 	jr	NZ,_read_sector_00111
-	ld	a,(ix-18 )
+	ld	a,(ix-14 )
 	sub	 e
 	jr	NZ,_read_sector_00111
-	ld	a,(ix-17 )
+	ld	a,(ix-13 )
 	sub	 d
 	jr	NZ,_read_sector_00111
 ;fat_filelib.c:280: Cluster = file->last_fat_lookup.CurrentCluster;
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	de,  &0125
 	add	hl, de
 	ld	a,(hl)
-	ld	(ix-12 ),a
+	ld	(ix-20 ),a
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-11 ),a
+	ld	(ix-19 ),a
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-10 ),a
+	ld	(ix-18 ),a
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-9 ),a
+	ld	(ix-17 ),a
 	jp	_read_sector_00112
 _read_sector_00111:
 ;fat_filelib.c:285: if (ClusterIdx && ClusterIdx == file->last_fat_lookup.ClusterIdx + 1)
-	ld	a,(ix-17 )
-	or	 (ix-18 )
-	or	 (ix-19 )
-	or	(ix-20 )
+	ld	a,(ix-13 )
+	or	 (ix-14 )
+	or	 (ix-15 )
+	or	(ix-16 )
 	jr	Z,_read_sector_00102
 	ld	a,c
 	add	a,  &01
@@ -770,37 +770,37 @@ _read_sector_00111:
 	ld	a,d
 	adc	a,  &00
 	ld	(ix-3 ),a
-	ld	a,(ix-20 )
+	ld	a,(ix-16 )
 	sub	 (ix-6 )
 	jr	NZ,_read_sector_00102
-	ld	a,(ix-19 )
+	ld	a,(ix-15 )
 	sub	 (ix-5 )
 	jr	NZ,_read_sector_00102
-	ld	a,(ix-18 )
+	ld	a,(ix-14 )
 	sub	 (ix-4 )
 	jr	NZ,_read_sector_00102
-	ld	a,(ix-17 )
+	ld	a,(ix-13 )
 	sub	 (ix-3 )
 	jr	NZ,_read_sector_00102
 ;fat_filelib.c:287: i = file->last_fat_lookup.ClusterIdx;
 ;fat_filelib.c:288: Cluster = file->last_fat_lookup.CurrentCluster;
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	push	bc
 	ld	bc,  &0125
 	add	hl, bc
 	pop	bc
 	ld	a,(hl)
-	ld	(ix-12 ),a
+	ld	(ix-20 ),a
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-11 ),a
+	ld	(ix-19 ),a
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-10 ),a
+	ld	(ix-18 ),a
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-9 ),a
+	ld	(ix-17 ),a
 	jr	_read_sector_00125
 _read_sector_00102:
 ;fat_filelib.c:294: i = 0;
@@ -808,19 +808,19 @@ _read_sector_00102:
 	ld	de, &0000
 ;fat_filelib.c:295: Cluster = file->startcluster;
 	push	hl
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	push	hl
 	pop	iy
 	pop	hl
 	ld	a,(iy+4 )
-	ld	(ix-12 ),a
+	ld	(ix-20 ),a
 	ld	a,(iy+5 )
-	ld	(ix-11 ),a
+	ld	(ix-19 ),a
 	ld	a,(iy+6 )
-	ld	(ix-10 ),a
+	ld	(ix-18 ),a
 	ld	a,(iy+7 )
-	ld	(ix-9 ),a
+	ld	(ix-17 ),a
 _read_sector_00125:
 	ld	(ix-6 ),c
 	ld	(ix-5 ),b
@@ -829,22 +829,22 @@ _read_sector_00125:
 _read_sector_00116:
 ;fat_filelib.c:299: for ( ;i<ClusterIdx; i++)
 	ld	a,(ix-6 )
-	sub	 (ix-20 )
+	sub	 (ix-16 )
 	ld	a,(ix-5 )
-	sbc	a, (ix-19 )
+	sbc	a, (ix-15 )
 	ld	a,(ix-4 )
-	sbc	a, (ix-18 )
+	sbc	a, (ix-14 )
 	ld	a,(ix-3 )
-	sbc	a, (ix-17 )
+	sbc	a, (ix-13 )
 	jp	NC,_read_sector_00107
 ;fat_filelib.c:304: if (!fatfs_cache_get_next_cluster(&_fs, file, i, &nextCluster))
 	ld	hl, &0000
 	add	hl,sp
-	ld	(ix-2 ),l
-	ld	(ix-1 ),h
+	ld	(ix-8 ),l
+	ld	(ix-7 ),h
 	ld	de,__fs
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-8 )
+	ld	h,(ix-7 )
 	push	hl
 	ld	l,(ix-4 )
 	ld	h,(ix-3 )
@@ -852,8 +852,8 @@ _read_sector_00116:
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
 	push	hl
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	push	hl
 	push	de
 	call	_fatfs_cache_get_next_cluster
@@ -865,11 +865,11 @@ _read_sector_00116:
 	jr	NZ,_read_sector_00106
 ;fat_filelib.c:307: nextCluster = fatfs_find_next_cluster(&_fs, Cluster);
 	ld	de,__fs
-	ld	l,(ix-10 )
-	ld	h,(ix-9 )
+	ld	l,(ix-18 )
+	ld	h,(ix-17 )
 	push	hl
-	ld	l,(ix-12 )
-	ld	h,(ix-11 )
+	ld	l,(ix-20 )
+	ld	h,(ix-19 )
 	push	hl
 	push	de
 	call	_fatfs_find_next_cluster
@@ -891,8 +891,8 @@ _read_sector_00116:
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
 	push	hl
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	push	hl
 	push	bc
 	call	_fatfs_cache_set_next_cluster
@@ -901,7 +901,7 @@ _read_sector_00116:
 	ld	sp,hl
 _read_sector_00106:
 ;fat_filelib.c:313: Cluster = nextCluster;
-	ld	hl, 12
+	ld	hl, 4
 	add	hl, sp
 	ex	de, hl
 	ld	hl, 0
@@ -919,57 +919,57 @@ _read_sector_00106:
 	jp	_read_sector_00116
 _read_sector_00107:
 ;fat_filelib.c:317: if (Cluster != FAT32_LAST_CLUSTER)
-	ld	a,(ix-12 )
+	ld	a,(ix-20 )
 	inc	a
 	jr	NZ,_read_sector_00150
-	ld	a,(ix-11 )
+	ld	a,(ix-19 )
 	inc	a
 	jr	NZ,_read_sector_00150
-	ld	a,(ix-10 )
+	ld	a,(ix-18 )
 	inc	a
 	jr	NZ,_read_sector_00150
-	ld	a,(ix-9 )
+	ld	a,(ix-17 )
 	inc	a
 	jr	Z,_read_sector_00112
 _read_sector_00150:
 ;fat_filelib.c:319: file->last_fat_lookup.CurrentCluster = Cluster;
-	ld	a,(ix-8 )
+	ld	a,(ix-2 )
 	add	a,  &21
 	ld	e,a
-	ld	a,(ix-7 )
+	ld	a,(ix-1 )
 	adc	a,  &01
 	ld	d,a
-	ld	a,(ix-8 )
+	ld	a,(ix-2 )
 	add	a,  &25
 	ld	h,a
-	ld	a,(ix-7 )
+	ld	a,(ix-1 )
 	adc	a,  &01
 	ld	l,a
 	push	de
 	ld	e, h
 	ld	d, l
-	ld	hl,  &000E
+	ld	hl,  &0006
 	add	hl, sp
 	ld	bc,  &0004
 	ldir
 	pop	de
 ;fat_filelib.c:320: file->last_fat_lookup.ClusterIdx = ClusterIdx;
-	ld	hl,  &0004
+	ld	hl,  &0008
 	add	hl, sp
 	ld	bc,  &0004
 	ldir
 _read_sector_00112:
 ;fat_filelib.c:325: if (Cluster == FAT32_LAST_CLUSTER)
-	ld	a,(ix-12 )
+	ld	a,(ix-20 )
 	inc	a
 	jr	NZ,_read_sector_00114
-	ld	a,(ix-11 )
+	ld	a,(ix-19 )
 	inc	a
 	jr	NZ,_read_sector_00114
-	ld	a,(ix-10 )
+	ld	a,(ix-18 )
 	inc	a
 	jr	NZ,_read_sector_00114
-	ld	a,(ix-9 )
+	ld	a,(ix-17 )
 	inc	a
 	jr	NZ,_read_sector_00114
 ;fat_filelib.c:326: return 0;
@@ -978,11 +978,11 @@ _read_sector_00112:
 _read_sector_00114:
 ;fat_filelib.c:329: lba = fatfs_lba_of_cluster(&_fs, Cluster) + Sector;
 	ld	de,__fs
-	ld	l,(ix-10 )
-	ld	h,(ix-9 )
+	ld	l,(ix-18 )
+	ld	h,(ix-17 )
 	push	hl
-	ld	l,(ix-12 )
-	ld	h,(ix-11 )
+	ld	l,(ix-20 )
+	ld	h,(ix-19 )
 	push	hl
 	push	de
 	call	_fatfs_lba_of_cluster
@@ -990,22 +990,22 @@ _read_sector_00114:
 	pop	af
 	pop	af
 	ld	a,l
-	add	a, (ix-16 )
+	add	a, (ix-12 )
 	ld	c,a
 	ld	a,h
-	adc	a, (ix-15 )
+	adc	a, (ix-11 )
 	ld	b,a
 	ld	a,e
-	adc	a, (ix-14 )
+	adc	a, (ix-10 )
 	ld	l,a
 	ld	a,d
-	adc	a, (ix-13 )
+	adc	a, (ix-9 )
 	ld	h,a
 ;fat_filelib.c:332: return fatfs_sector_read(&_fs, lba, file->file_data.sector);
-	ld	a,(ix-8 )
+	ld	a,(ix-2 )
 	add	a,  &29
 	ld	e,a
-	ld	a,(ix-7 )
+	ld	a,(ix-1 )
 	adc	a,  &01
 	ld	d,a
 	push	de
@@ -1361,16 +1361,16 @@ _fl_fread:
 	call	__mulint_rrx_s
 	pop	af
 	pop	af
-	ld	(ix-22 ),l
-	ld	(ix-21 ),h
+	ld	(ix-26 ),l
+	ld	(ix-25 ),h
 ;fat_filelib.c:555: int bytesRead = 0;
-	ld	hl, &0000
-	ex	(sp), hl
+	ld	(ix-20 ), &00
+	ld	(ix-19 ), &00
 ;fat_filelib.c:560: FL_FILE *file = (FL_FILE *)f;
 	ld	a,(ix+10 )
-	ld	(ix-24 ),a
+	ld	(ix-18 ),a
 	ld	a,(ix+11 )
-	ld	(ix-23 ),a
+	ld	(ix-17 ),a
 ;fat_filelib.c:563: CHECK_FL_INIT();
 	ld	a,(__filelib_init + 1)
 	ld	iy,__filelib_init
@@ -1382,8 +1382,8 @@ fl_fread_00102:
 	ld	a,(ix+5 )
 	or	(ix+4 )
 	jr	Z,fl_fread_00103
-	ld	a,(ix-23 )
-	or	(ix-24 )
+	ld	a,(ix-17 )
+	or	(ix-18 )
 	jr	NZ,fl_fread_00104
 fl_fread_00103:
 ;fat_filelib.c:566: return -1;
@@ -1391,8 +1391,8 @@ fl_fread_00103:
 	jp	fl_fread_00126
 fl_fread_00104:
 ;fat_filelib.c:569: if (!(file->flags & FILE_READ))
-	ld	l,(ix-24 )
-	ld	h,(ix-23 )
+	ld	l,(ix-18 )
+	ld	h,(ix-17 )
 	ld	de,  &0331
 	add	hl, de
 	ld	a,(hl)
@@ -1403,178 +1403,178 @@ fl_fread_00104:
 	jp	fl_fread_00126
 fl_fread_00107:
 ;fat_filelib.c:573: if (!count)
-	ld	a,(ix-21 )
-	or	(ix-22 )
+	ld	a,(ix-25 )
+	or	(ix-26 )
 	jr	NZ,fl_fread_00109
 ;fat_filelib.c:574: return 0;
 	ld	hl, &0000
 	jp	fl_fread_00126
 fl_fread_00109:
 ;fat_filelib.c:577: if (file->bytenum >= file->filelength)
-	ld	a,(ix-24 )
+	ld	a,(ix-18 )
 	add	a,  &08
-	ld	(ix-2 ),a
-	ld	a,(ix-23 )
+	ld	(ix-14 ),a
+	ld	a,(ix-17 )
 	adc	a,  &00
-	ld	(ix-1 ),a
-	ld	e,(ix-2 )
-	ld	d,(ix-1 )
-	ld	hl,  &0012
+	ld	(ix-13 ),a
+	ld	e,(ix-14 )
+	ld	d,(ix-13 )
+	ld	hl,  &0014
 	add	hl, sp
 	ex	de, hl
 	ld	bc,  &0004
 	ldir
-	ld	c,(ix-24 )
-	ld	b,(ix-23 )
+	ld	c,(ix-18 )
+	ld	b,(ix-17 )
 	push	bc
 	pop	iy
 	ld	a,(iy+12 )
-	ld	(ix-14 ),a
+	ld	(ix-4 ),a
 	ld	a,(iy+13 )
-	ld	(ix-13 ),a
+	ld	(ix-3 ),a
 	ld	a,(iy+14 )
-	ld	(ix-12 ),a
+	ld	(ix-2 ),a
 	ld	a,(iy+15 )
-	ld	(ix-11 ),a
-	ld	a,(ix-10 )
-	sub	 (ix-14 )
-	ld	a,(ix-9 )
-	sbc	a, (ix-13 )
+	ld	(ix-1 ),a
 	ld	a,(ix-8 )
-	sbc	a, (ix-12 )
+	sub	 (ix-4 )
 	ld	a,(ix-7 )
-	sbc	a, (ix-11 )
+	sbc	a, (ix-3 )
+	ld	a,(ix-6 )
+	sbc	a, (ix-2 )
+	ld	a,(ix-5 )
+	sbc	a, (ix-1 )
 	jr	C,fl_fread_00111
 ;fat_filelib.c:578: return -1;
 	ld	hl, &FFFF
 	jp	fl_fread_00126
 fl_fread_00111:
 ;fat_filelib.c:581: if ( (file->bytenum + count) > file->filelength )
-	ld	l,(ix-22 )
-	ld	h,(ix-21 )
-	ld	a,(ix-21 )
+	ld	l,(ix-26 )
+	ld	h,(ix-25 )
+	ld	a,(ix-25 )
 	rla
 	sbc	a, a
 	ld	e,a
 	ld	d,a
-	ld	a,(ix-10 )
+	ld	a,(ix-8 )
 	add	a, l
 	ld	l,a
-	ld	a,(ix-9 )
+	ld	a,(ix-7 )
 	adc	a, h
 	ld	h,a
-	ld	a,(ix-8 )
+	ld	a,(ix-6 )
 	adc	a, e
 	ld	e,a
-	ld	a,(ix-7 )
+	ld	a,(ix-5 )
 	adc	a, d
 	ld	d,a
-	ld	a,(ix-14 )
+	ld	a,(ix-4 )
 	sub	 l
-	ld	a,(ix-13 )
+	ld	a,(ix-3 )
 	sbc	a, h
-	ld	a,(ix-12 )
+	ld	a,(ix-2 )
 	sbc	a, e
-	ld	a,(ix-11 )
+	ld	a,(ix-1 )
 	sbc	a, d
 	jr	NC,fl_fread_00113
 ;fat_filelib.c:582: count = file->filelength - file->bytenum;
-	ld	a,(ix-14 )
-	sub	 (ix-10 )
-	ld	(ix-14 ),a
-	ld	a,(ix-13 )
-	sbc	a, (ix-9 )
-	ld	(ix-13 ),a
-	ld	a,(ix-12 )
-	sbc	a, (ix-8 )
-	ld	(ix-12 ),a
-	ld	a,(ix-11 )
+	ld	a,(ix-4 )
+	sub	 (ix-8 )
+	ld	(ix-4 ),a
+	ld	a,(ix-3 )
 	sbc	a, (ix-7 )
-	ld	(ix-11 ),a
-	ld	a,(ix-14 )
-	ld	(ix-22 ),a
-	ld	a,(ix-13 )
-	ld	(ix-21 ),a
+	ld	(ix-3 ),a
+	ld	a,(ix-2 )
+	sbc	a, (ix-6 )
+	ld	(ix-2 ),a
+	ld	a,(ix-1 )
+	sbc	a, (ix-5 )
+	ld	(ix-1 ),a
+	ld	a,(ix-4 )
+	ld	(ix-26 ),a
+	ld	a,(ix-3 )
+	ld	(ix-25 ),a
 fl_fread_00113:
 ;fat_filelib.c:585: sector = file->bytenum / FAT_SECTOR_SIZE;
 	push	af
-	ld	a,(ix-10 )
-	ld	(ix-14 ),a
-	ld	a,(ix-9 )
-	ld	(ix-13 ),a
 	ld	a,(ix-8 )
-	ld	(ix-12 ),a
+	ld	(ix-4 ),a
 	ld	a,(ix-7 )
-	ld	(ix-11 ),a
+	ld	(ix-3 ),a
+	ld	a,(ix-6 )
+	ld	(ix-2 ),a
+	ld	a,(ix-5 )
+	ld	(ix-1 ),a
 	pop	af
 	ld	b, &09
 fl_fread_00171:
-	srl	(ix-11 )
-	rr	(ix-12 )
-	rr	(ix-13 )
-	rr	(ix-14 )
+	srl	(ix-1 )
+	rr	(ix-2 )
+	rr	(ix-3 )
+	rr	(ix-4 )
 	djnz	fl_fread_00171
 ;fat_filelib.c:588: offset = file->bytenum % FAT_SECTOR_SIZE;
-	ld	a,(ix-10 )
-	ld	(ix-20 ),a
-	ld	a,(ix-9 )
+	ld	a,(ix-8 )
+	ld	(ix-24 ),a
+	ld	a,(ix-7 )
 	and	  &01
-	ld	(ix-19 ),a
-	ld	(ix-18 ), &00
-	ld	(ix-17 ), &00
+	ld	(ix-23 ),a
+	ld	(ix-22 ), &00
+	ld	(ix-21 ), &00
 ;fat_filelib.c:590: while (bytesRead < count)
 fl_fread_00123:
-	ld	a,(ix-28 )
-	sub	 (ix-22 )
-	ld	a,(ix-27 )
-	sbc	a, (ix-21 )
+	ld	a,(ix-20 )
+	sub	 (ix-26 )
+	ld	a,(ix-19 )
+	sbc	a, (ix-25 )
 	jp	PO, fl_fread_00173
 	xor	  &80
 fl_fread_00173:
 	jp	P,fl_fread_00125
 ;fat_filelib.c:593: if (file->file_data.address != sector)
-	ld	a,(ix-24 )
+	ld	a,(ix-18 )
 	add	a,  &29
-	ld	(ix-10 ),a
-	ld	a,(ix-23 )
+	ld	(ix-8 ),a
+	ld	a,(ix-17 )
 	adc	a,  &01
-	ld	(ix-9 ),a
-	ld	a,(ix-10 )
+	ld	(ix-7 ),a
+	ld	a,(ix-8 )
 	add	a,  &00
 	ld	e,a
-	ld	a,(ix-9 )
+	ld	a,(ix-7 )
 	adc	a,  &02
 	ld	d,a
 	push	de
-	ld	hl,  &0018
+	ld	hl,  &0012
 	add	hl, sp
 	ex	de, hl
 	ld	bc,  &0004
 	ldir
 	pop	de
-	ld	a,(ix-14 )
-	sub	 (ix-6 )
+	ld	a,(ix-4 )
+	sub	 (ix-12 )
 	jr	NZ,fl_fread_00174
-	ld	a,(ix-13 )
-	sub	 (ix-5 )
+	ld	a,(ix-3 )
+	sub	 (ix-11 )
 	jr	NZ,fl_fread_00174
-	ld	a,(ix-12 )
-	sub	 (ix-4 )
+	ld	a,(ix-2 )
+	sub	 (ix-10 )
 	jr	NZ,fl_fread_00174
-	ld	a,(ix-11 )
-	sub	 (ix-3 )
+	ld	a,(ix-1 )
+	sub	 (ix-9 )
 	jr	Z,fl_fread_00117
 fl_fread_00174:
 ;fat_filelib.c:600: if (!_read_sector(file, sector))
 	push	de
-	ld	l,(ix-12 )
-	ld	h,(ix-11 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	push	hl
-	ld	l,(ix-14 )
-	ld	h,(ix-13 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	push	hl
-	ld	l,(ix-24 )
-	ld	h,(ix-23 )
+	ld	l,(ix-18 )
+	ld	h,(ix-17 )
 	push	hl
 	call	__read_sector
 	pop	af
@@ -1585,15 +1585,15 @@ fl_fread_00174:
 	or	l
 	jp	Z,fl_fread_00125
 ;fat_filelib.c:604: file->file_data.address = sector;
-	ld	hl,  &000E
+	ld	hl,  &0018
 	add	hl, sp
 	ld	bc,  &0004
 	ldir
 ;fat_filelib.c:605: file->file_data.dirty = 0;
-	ld	a,(ix-10 )
+	ld	a,(ix-8 )
 	add	a,  &04
 	ld	l,a
-	ld	a,(ix-9 )
+	ld	a,(ix-7 )
 	adc	a,  &02
 	ld	h,a
 	ld	(hl), &00
@@ -1602,66 +1602,66 @@ fl_fread_00174:
 fl_fread_00117:
 ;fat_filelib.c:609: copyCount = FAT_SECTOR_SIZE - offset;
 	xor	 a
-	sub	 (ix-20 )
+	sub	 (ix-24 )
 	ld	h,a
 	ld	a, &02
-	sbc	a, (ix-19 )
+	sbc	a, (ix-23 )
 	ld	l,a
 	ld	a, &00
-	sbc	a, (ix-18 )
+	sbc	a, (ix-22 )
 	ld	d,a
 	ld	a, &00
-	sbc	a, (ix-17 )
+	sbc	a, (ix-21 )
 	ld	e,a
-	ld	(ix-16 ),h
-	ld	(ix-15 ),l
+	ld	(ix-28 ),h
+	ld	(ix-27 ),l
 ;fat_filelib.c:612: if (copyCount > (count - bytesRead))
-	ld	a,(ix-22 )
+	ld	a,(ix-26 )
+	sub	 (ix-20 )
+	ld	(ix-12 ),a
+	ld	a,(ix-25 )
+	sbc	a, (ix-19 )
+	ld	(ix-11 ),a
+	ld	a,(ix-12 )
 	sub	 (ix-28 )
-	ld	(ix-6 ),a
-	ld	a,(ix-21 )
+	ld	a,(ix-11 )
 	sbc	a, (ix-27 )
-	ld	(ix-5 ),a
-	ld	a,(ix-6 )
-	sub	 (ix-16 )
-	ld	a,(ix-5 )
-	sbc	a, (ix-15 )
 	jp	PO, fl_fread_00175
 	xor	  &80
 fl_fread_00175:
 	jp	P,fl_fread_00119
 ;fat_filelib.c:613: copyCount = (count - bytesRead);
-	ld	a,(ix-6 )
-	ld	(ix-6 ),a
-	ld	a,(ix-5 )
-	ld	(ix-5 ),a
-	ld	a,(ix-6 )
-	ld	(ix-16 ),a
-	ld	a,(ix-5 )
-	ld	(ix-15 ),a
+	ld	a,(ix-12 )
+	ld	(ix-12 ),a
+	ld	a,(ix-11 )
+	ld	(ix-11 ),a
+	ld	a,(ix-12 )
+	ld	(ix-28 ),a
+	ld	a,(ix-11 )
+	ld	(ix-27 ),a
 fl_fread_00119:
 ;fat_filelib.c:619: dst=(unsigned char*)((unsigned char*)buffer + bytesRead);
 	ld	l,(ix+4 )
 	ld	h,(ix+5 )
-	pop	de
-	push	de
+	ld	e,(ix-20 )
+	ld	d,(ix-19 )
 	add	hl,de
-	ld	(ix-26 ),l
-	ld	(ix-25 ),h
+	ld	(ix-16 ),l
+	ld	(ix-15 ),h
 ;fat_filelib.c:620: src=(unsigned char*)(file->file_data.sector + offset);
-	ld	a,(ix-10 )
-	add	a, (ix-20 )
+	ld	a,(ix-8 )
+	add	a, (ix-24 )
 	ld	c,a
-	ld	a,(ix-9 )
-	adc	a, (ix-19 )
+	ld	a,(ix-7 )
+	adc	a, (ix-23 )
 	ld	b,a
 ;fat_filelib.c:622: do
 	ld	de, &0000
 fl_fread_00120:
 ;fat_filelib.c:625: dst[c]=src[c];
 	push	hl
-	ld	l,(ix-26 )
-	ld	h,(ix-25 )
+	ld	l,(ix-16 )
+	ld	h,(ix-15 )
 	push	hl
 	pop	iy
 	pop	hl
@@ -1675,23 +1675,23 @@ fl_fread_00120:
 	inc	de
 ;fat_filelib.c:627: }while(c<copyCount);
 	ld	a,e
-	sub	 (ix-16 )
+	sub	 (ix-28 )
 	ld	a,d
-	sbc	a, (ix-15 )
+	sbc	a, (ix-27 )
 	jp	PO, fl_fread_00176
 	xor	  &80
 fl_fread_00176:
 	jp	M,fl_fread_00120
 ;fat_filelib.c:630: bytesRead += copyCount;
-	ld	a,(ix-28 )
-	add	a, (ix-16 )
-	ld	(ix-28 ),a
-	ld	a,(ix-27 )
-	adc	a, (ix-15 )
-	ld	(ix-27 ),a
+	ld	a,(ix-20 )
+	add	a, (ix-28 )
+	ld	(ix-20 ),a
+	ld	a,(ix-19 )
+	adc	a, (ix-27 )
+	ld	(ix-19 ),a
 ;fat_filelib.c:633: file->bytenum += copyCount;
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-14 )
+	ld	h,(ix-13 )
 	ld	e,(hl)
 	inc	hl
 	ld	d,(hl)
@@ -1700,29 +1700,29 @@ fl_fread_00176:
 	ld	b,(hl)
 	dec	hl
 	ld	l,(hl)
-	ld	a,(ix-16 )
-	ld	(ix-6 ),a
-	ld	a,(ix-15 )
-	ld	(ix-5 ),a
-	ld	a,(ix-15 )
+	ld	a,(ix-28 )
+	ld	(ix-12 ),a
+	ld	a,(ix-27 )
+	ld	(ix-11 ),a
+	ld	a,(ix-27 )
 	rla
 	sbc	a, a
-	ld	(ix-4 ),a
-	ld	(ix-3 ),a
+	ld	(ix-10 ),a
+	ld	(ix-9 ),a
 	ld	a,e
-	add	a, (ix-6 )
+	add	a, (ix-12 )
 	ld	c,a
 	ld	a,d
-	adc	a, (ix-5 )
+	adc	a, (ix-11 )
 	ld	d,a
 	ld	a,l
-	adc	a, (ix-4 )
+	adc	a, (ix-10 )
 	ld	e,a
 	ld	a,b
-	adc	a, (ix-3 )
+	adc	a, (ix-9 )
 	ld	b,a
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-14 )
+	ld	h,(ix-13 )
 	ld	(hl),c
 	inc	hl
 	ld	(hl),d
@@ -1731,25 +1731,25 @@ fl_fread_00176:
 	inc	hl
 	ld	(hl),b
 ;fat_filelib.c:636: sector++;
-	inc	(ix-14 )
+	inc	(ix-4 )
 	jr	NZ,fl_fread_00177
-	inc	(ix-13 )
+	inc	(ix-3 )
 	jr	NZ,fl_fread_00177
-	inc	(ix-12 )
+	inc	(ix-2 )
 	jr	NZ,fl_fread_00177
-	inc	(ix-11 )
+	inc	(ix-1 )
 fl_fread_00177:
 ;fat_filelib.c:637: offset = 0;
 	xor	 a
-	ld	(ix-20 ),a
-	ld	(ix-19 ),a
-	ld	(ix-18 ),a
-	ld	(ix-17 ),a
+	ld	(ix-24 ),a
+	ld	(ix-23 ),a
+	ld	(ix-22 ),a
+	ld	(ix-21 ),a
 	jp	fl_fread_00123
 fl_fread_00125:
 ;fat_filelib.c:640: return bytesRead;
-	pop	hl
-	push	hl
+	ld	l,(ix-20 )
+	ld	h,(ix-19 )
 fl_fread_00126:
 	ld	sp,ix
 	pop	ix
@@ -1797,16 +1797,16 @@ fl_fswrite_00104:
 	ld	bc,  &0008
 	add	hl, bc
 	ld	a,(hl)
-	ld	(ix-6 ),a
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-5 ),a
-	inc	hl
-	ld	a,(hl)
 	ld	(ix-4 ),a
 	inc	hl
 	ld	a,(hl)
 	ld	(ix-3 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-2 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-1 ),a
 	ld	l, e
 	ld	h, d
 	ld	bc,  &000C
@@ -1820,13 +1820,13 @@ fl_fswrite_00104:
 	dec	hl
 	ld	h,(hl)
 	ld	l,a
-	ld	a,(ix-6 )
-	sub	 c
-	ld	a,(ix-5 )
-	sbc	a, b
 	ld	a,(ix-4 )
-	sbc	a, h
+	sub	 c
 	ld	a,(ix-3 )
+	sbc	a, b
+	ld	a,(ix-2 )
+	sbc	a, h
+	ld	a,(ix-1 )
 	sbc	a, l
 	jr	C,fl_fswrite_00107
 ;fat_filelib.c:659: return -1;
@@ -1835,47 +1835,51 @@ fl_fswrite_00104:
 fl_fswrite_00107:
 ;fat_filelib.c:662: sector = start_sector;//file->bytenum / FAT_SECTOR_SIZE;
 	ld	a,(ix+8 )
-	ld	(ix-6 ),a
+	ld	(ix-4 ),a
 	ld	a,(ix+9 )
-	ld	(ix-5 ),a
+	ld	(ix-3 ),a
 	ld	a,(ix+9 )
 	rla
 	sbc	a, a
-	ld	(ix-4 ),a
-	ld	(ix-3 ),a
+	ld	(ix-2 ),a
+	ld	(ix-1 ),a
 ;fat_filelib.c:663: cnt=size;
 	ld	c,(ix+6 )
 	ld	b,(ix+7 )
 ;fat_filelib.c:664: while (cnt)
-	ld	(ix-2 ),e
-	ld	(ix-1 ),d
+	inc	sp
+	inc	sp
+	push	de
 	ld	e,(ix+4 )
 	ld	d,(ix+5 )
 fl_fswrite_00110:
 	ld	a,b
 	or	c
-	jp	Z,fl_fswrite_00112
+	jr	Z,fl_fswrite_00112
 ;fat_filelib.c:666: if (!fatfs_write_sector(&_fs, file->startcluster, sector, buffer))
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	pop	hl
+	push	hl
 	inc	hl
 	inc	hl
 	inc	hl
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-10 ),a
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-9 ),a
 	inc	hl
 	ld	a,(hl)
 	ld	(ix-8 ),a
 	inc	hl
 	ld	a,(hl)
 	ld	(ix-7 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-6 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-5 ),a
 	push	bc
 	push	de
 	push	de
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
+	push	hl
 	ld	l,(ix-4 )
 	ld	h,(ix-3 )
 	push	hl
@@ -1884,9 +1888,6 @@ fl_fswrite_00110:
 	push	hl
 	ld	l,(ix-8 )
 	ld	h,(ix-7 )
-	push	hl
-	ld	l,(ix-10 )
-	ld	h,(ix-9 )
 	push	hl
 	ld	hl,__fs
 	push	hl
@@ -1908,17 +1909,17 @@ fl_fswrite_00109:
 	add	hl,de
 	ex	de,hl
 ;fat_filelib.c:674: sector++;
-	inc	(ix-6 )
-	jr	NZ,fl_fswrite_00133
-	inc	(ix-5 )
-	jr	NZ,fl_fswrite_00133
 	inc	(ix-4 )
 	jr	NZ,fl_fswrite_00133
 	inc	(ix-3 )
+	jr	NZ,fl_fswrite_00133
+	inc	(ix-2 )
+	jr	NZ,fl_fswrite_00133
+	inc	(ix-1 )
 fl_fswrite_00133:
 ;fat_filelib.c:675: cnt--;
 	dec	bc
-	jp	fl_fswrite_00110
+	jr	fl_fswrite_00110
 fl_fswrite_00112:
 ;fat_filelib.c:678: return size;
 	ld	l,(ix+6 )
@@ -1987,18 +1988,18 @@ fl_fseek_00106:
 ;fat_filelib.c:702: file->file_data.address =  &FFFFFFFF;
 	ld	a,(ix-15 )
 	add	a,  &29
-	ld	(ix-8 ),a
+	ld	(ix-2 ),a
 	ld	a,(ix-14 )
 	adc	a,  &01
-	ld	(ix-7 ),a
-	ld	a,(ix-8 )
+	ld	(ix-1 ),a
+	ld	a,(ix-2 )
 	add	a,  &00
-	ld	(ix-6 ),a
-	ld	a,(ix-7 )
+	ld	(ix-4 ),a
+	ld	a,(ix-1 )
 	adc	a,  &02
-	ld	(ix-5 ),a
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	(ix-3 ),a
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl), &FF
 	inc	hl
 	ld	(hl), &FF
@@ -2007,14 +2008,14 @@ fl_fseek_00106:
 	inc	hl
 	ld	(hl), &FF
 ;fat_filelib.c:703: file->file_data.dirty = 0;
-	ld	a,(ix-8 )
+	ld	a,(ix-2 )
 	add	a,  &04
-	ld	(ix-6 ),a
-	ld	a,(ix-7 )
+	ld	(ix-4 ),a
+	ld	a,(ix-1 )
 	adc	a,  &02
-	ld	(ix-5 ),a
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	(ix-3 ),a
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	xor	 a
 	ld	(hl), a
 	inc	hl
@@ -2022,11 +2023,11 @@ fl_fseek_00106:
 ;fat_filelib.c:707: file->bytenum = (unsigned long)offset;
 	ld	a,(ix-15 )
 	add	a,  &08
-	ld	(ix-6 ),a
+	ld	(ix-4 ),a
 	ld	a,(ix-14 )
 	adc	a,  &00
-	ld	(ix-5 ),a
-	ld	hl, 13
+	ld	(ix-3 ),a
+	ld	hl, 9
 	add	hl, sp
 	ex	de, hl
 	ld	hl, 23
@@ -2038,9 +2039,9 @@ fl_fseek_00106:
 	or	(ix+10 )
 	jr	NZ,fl_fseek_00125
 ;fat_filelib.c:707: file->bytenum = (unsigned long)offset;
-	ld	e,(ix-6 )
-	ld	d,(ix-5 )
-	ld	hl,  &000D
+	ld	e,(ix-4 )
+	ld	d,(ix-3 )
+	ld	hl,  &0009
 	add	hl, sp
 	ld	bc,  &0004
 	ldir
@@ -2058,17 +2059,17 @@ fl_fseek_00106:
 	ld	a,(iy+15 )
 	ld	(ix-9 ),a
 	ld	a,(ix-12 )
-	sub	 (ix-4 )
+	sub	 (ix-8 )
 	ld	a,(ix-11 )
-	sbc	a, (ix-3 )
+	sbc	a, (ix-7 )
 	ld	a,(ix-10 )
-	sbc	a, (ix-2 )
+	sbc	a, (ix-6 )
 	ld	a,(ix-9 )
-	sbc	a, (ix-1 )
+	sbc	a, (ix-5 )
 	jr	NC,fl_fseek_00109
 ;fat_filelib.c:710: file->bytenum = file->filelength;
-	ld	e,(ix-6 )
-	ld	d,(ix-5 )
+	ld	e,(ix-4 )
+	ld	d,(ix-3 )
 	ld	hl,  &0005
 	add	hl, sp
 	ld	bc,  &0004
@@ -2087,8 +2088,8 @@ fl_fseek_00125:
 	or	 a
 	jp	NZ,fl_fseek_00122
 ;fat_filelib.c:719: file->bytenum += offset;
-	ld	e,(ix-6 )
-	ld	d,(ix-5 )
+	ld	e,(ix-4 )
+	ld	d,(ix-3 )
 	ld	hl,  &0005
 	add	hl, sp
 	ex	de, hl
@@ -2099,20 +2100,20 @@ fl_fseek_00125:
 	jr	NZ,fl_fseek_00116
 ;fat_filelib.c:719: file->bytenum += offset;
 	ld	a,(ix-12 )
-	add	a, (ix-4 )
-	ld	(ix-4 ),a
+	add	a, (ix-8 )
+	ld	(ix-8 ),a
 	ld	a,(ix-11 )
-	adc	a, (ix-3 )
-	ld	(ix-3 ),a
+	adc	a, (ix-7 )
+	ld	(ix-7 ),a
 	ld	a,(ix-10 )
-	adc	a, (ix-2 )
-	ld	(ix-2 ),a
+	adc	a, (ix-6 )
+	ld	(ix-6 ),a
 	ld	a,(ix-9 )
-	adc	a, (ix-1 )
-	ld	(ix-1 ),a
-	ld	e,(ix-6 )
-	ld	d,(ix-5 )
-	ld	hl,  &000D
+	adc	a, (ix-5 )
+	ld	(ix-5 ),a
+	ld	e,(ix-4 )
+	ld	d,(ix-3 )
+	ld	hl,  &0009
 	add	hl, sp
 	ld	bc,  &0004
 	ldir
@@ -2131,17 +2132,17 @@ fl_fseek_00125:
 	inc	hl
 	ld	b,(hl)
 	ld	a,e
-	sub	 (ix-4 )
+	sub	 (ix-8 )
 	ld	a,d
-	sbc	a, (ix-3 )
+	sbc	a, (ix-7 )
 	ld	a,c
-	sbc	a, (ix-2 )
+	sbc	a, (ix-6 )
 	ld	a,b
-	sbc	a, (ix-1 )
+	sbc	a, (ix-5 )
 	jp	NC,fl_fseek_00117
 ;fat_filelib.c:722: file->bytenum = file->filelength;
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl),e
 	inc	hl
 	ld	(hl),d
@@ -2165,7 +2166,7 @@ fl_fseek_00116:
 	sbc	a, (ix+9 )
 	ld	(ix+9 ),a
 ;fat_filelib.c:731: if ((unsigned long)offset > file->bytenum)
-	ld	hl, 13
+	ld	hl, 9
 	add	hl, sp
 	ex	de, hl
 	ld	hl, 23
@@ -2173,17 +2174,17 @@ fl_fseek_00116:
 	ld	bc, 4
 	ldir
 	ld	a,(ix-12 )
-	sub	 (ix-4 )
+	sub	 (ix-8 )
 	ld	a,(ix-11 )
-	sbc	a, (ix-3 )
+	sbc	a, (ix-7 )
 	ld	a,(ix-10 )
-	sbc	a, (ix-2 )
+	sbc	a, (ix-6 )
 	ld	a,(ix-9 )
-	sbc	a, (ix-1 )
+	sbc	a, (ix-5 )
 	jr	NC,fl_fseek_00113
 ;fat_filelib.c:732: file->bytenum = 0;
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl), &00
 	inc	hl
 	ld	(hl), &00
@@ -2195,19 +2196,19 @@ fl_fseek_00116:
 fl_fseek_00113:
 ;fat_filelib.c:734: file->bytenum-= offset;
 	ld	a,(ix-12 )
-	sub	 (ix-4 )
+	sub	 (ix-8 )
 	ld	d,a
 	ld	a,(ix-11 )
-	sbc	a, (ix-3 )
+	sbc	a, (ix-7 )
 	ld	e,a
 	ld	a,(ix-10 )
-	sbc	a, (ix-2 )
+	sbc	a, (ix-6 )
 	ld	b,a
 	ld	a,(ix-9 )
-	sbc	a, (ix-1 )
+	sbc	a, (ix-5 )
 	ld	c,a
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl),d
 	inc	hl
 	ld	(hl),e
@@ -2238,8 +2239,8 @@ fl_fseek_00122:
 	ld	(ix-10 ),a
 	ld	a,(iy+15 )
 	ld	(ix-9 ),a
-	ld	e,(ix-6 )
-	ld	d,(ix-5 )
+	ld	e,(ix-4 )
+	ld	d,(ix-3 )
 	ld	hl,  &0005
 	add	hl, sp
 	ld	bc,  &0004

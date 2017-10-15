@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:41 2017
+; This file was generated Sun Oct 15 00:38:11 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -39,14 +39,9 @@ _InitUI:
 	push	hl
 	call	_SetRegularScreenPtr
 	pop	af
-;ui_element.c:83: __endasm;
+;ui_element.c:76: __endasm;
 	call InitInvertLines
 	call CopyBackgroundToScreen
-	call  &BD19
-	ld bc, &BC00+6
-	out (c), c
-	ld bc, &BD00+25
-	out (c), c
 	ld hl, Palette
 	xor a
 	SetFirmwarePalette_Loop:
@@ -100,33 +95,33 @@ _InitUI:
 	ret
 	ret
 _InitUI_end:
-;ui_element.c:87: void StopError(char errorCode)
+;ui_element.c:80: void StopError(char errorCode)
 ;	---------------------------------
 ; Function StopError
 ; ---------------------------------
 _StopError_start:
 _StopError:
-;ui_element.c:89: PrintEmptyLine();
+;ui_element.c:82: PrintEmptyLine();
 	call	_PrintEmptyLine
-;ui_element.c:90: PrintEmptyLine();
+;ui_element.c:83: PrintEmptyLine();
 	call	_PrintEmptyLine
-;ui_element.c:91: Println(" Ooops.. something went wrong");
+;ui_element.c:84: Println(" Ooops.. something went wrong");
 	ld	hl,__str_ui_element_0
 	push	hl
 	call	_Println
 	pop	af
-;ui_element.c:92: PrintEmptyLine();
+;ui_element.c:85: PrintEmptyLine();
 	call	_PrintEmptyLine
-;ui_element.c:93: Println(" Errorcode");
+;ui_element.c:86: Println(" Errorcode");
 	ld	hl,__str_ui_element_1
 	push	hl
 	call	_Println
-;ui_element.c:94: Print(" ");
+;ui_element.c:87: Print(" ");
 	ld	hl, __str_ui_element_2
 	ex	(sp),hl
 	call	_Print
 	pop	af
-;ui_element.c:95: Println(GetErrorString(errorCode));
+;ui_element.c:88: Println(GetErrorString(errorCode));
 	ld	hl, 2+0
 	add	hl, sp
 	ld	a, (hl)
@@ -137,7 +132,7 @@ _StopError:
 	push	hl
 	call	_Println
 	pop	af
-;ui_element.c:97: InfiniteLoop();
+;ui_element.c:90: InfiniteLoop();
 	jp	_InfiniteLoop
 _StopError_end:
 __str_ui_element_0:
@@ -149,18 +144,18 @@ __str_ui_element_1:
 __str_ui_element_2:
 	db " "
 	db  &00
-;ui_element.c:101: void CLS()
+;ui_element.c:94: void CLS()
 ;	---------------------------------
 ; Function CLS
 ; ---------------------------------
 _CLS_start:
 _CLS:
-;ui_element.c:103: SetRegularScreenPtr(REGULAR_SCREENPTR);
+;ui_element.c:96: SetRegularScreenPtr(REGULAR_SCREENPTR);
 	ld	hl, &C140
 	push	hl
 	call	_SetRegularScreenPtr
 	pop	af
-;ui_element.c:129: __endasm;
+;ui_element.c:122: __endasm;
 	di
 	ld (CLS_PrevSP+1), sp
 	ld d, 8
@@ -186,13 +181,13 @@ _CLS:
 	ei
 	ret
 _CLS_end:
-;ui_element.c:133: void InvertLine(char y)
+;ui_element.c:126: void InvertLine(char y)
 ;	---------------------------------
 ; Function InvertLine
 ; ---------------------------------
 _InvertLine_start:
 _InvertLine:
-;ui_element.c:204: __endasm;
+;ui_element.c:197: __endasm;
 	push ix
 	ld ix, 0
 	add ix, sp

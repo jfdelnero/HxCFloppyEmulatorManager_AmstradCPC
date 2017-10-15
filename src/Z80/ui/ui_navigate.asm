@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:42 2017
+; This file was generated Sun Oct 15 00:38:12 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -339,24 +339,24 @@ _Select:
 	add	hl, hl
 	ld	a,l
 	add	a,  &00
-	ld	(ix-11 ),a
+	ld	(ix-8 ),a
 	ld	a,h
 	adc	a,  &25
-	ld	(ix-10 ),a
+	ld	(ix-7 ),a
 ;ui_navigate.c:176: if (dirEntry->attributes &  &10)
-	pop	hl
-	push	hl
+	ld	l,(ix-8 )
+	ld	h,(ix-7 )
 	ld	de,  &000C
 	add	hl, de
 	bit	4,(hl)
 	jp	Z,Select_00120
 ;ui_navigate.c:179: subDir = &dirEntry->longName[0];
-	ld	a,(ix-11 )
+	ld	a,(ix-8 )
 	add	a,  &15
-	ld	(ix-7 ),a
-	ld	a,(ix-10 )
+	ld	(ix-11 ),a
+	ld	a,(ix-7 )
 	adc	a,  &00
-	ld	(ix-6 ),a
+	ld	(ix-10 ),a
 ;ui_navigate.c:181: pathLen = (unsigned char) z80_strlen( (char*)BROWSE_CURRENTPATH );
 	ld	hl, &1700
 	push	hl
@@ -364,8 +364,8 @@ _Select:
 	pop	af
 	ld	(ix-9 ),l
 ;ui_navigate.c:183: if ( pathLen && (subDir[0]=='.') && (subDir[1]=='.') )
-	ld	l,(ix-7 )
-	ld	h,(ix-6 )
+	pop	hl
+	push	hl
 	ld	a,(hl)
 	ld	(ix-1 ), a
 	sub	  &2E
@@ -382,8 +382,8 @@ Select_00168:
 	ld	a,(ix-2 )
 	or	 a
 	jr	Z,Select_00115
-	ld	l,(ix-7 )
-	ld	h,(ix-6 )
+	pop	hl
+	push	hl
 	inc	hl
 	ld	a,(hl)
 	sub	  &2E
@@ -423,7 +423,7 @@ Select_00115:
 	jp	NZ,Select_00122
 ;ui_navigate.c:198: j = pathLen;
 	ld	a,(ix-9 )
-	ld	(ix-8 ),a
+	ld	(ix-6 ),a
 ;ui_navigate.c:200: c = subDir[i];
 	ld	e,(ix-1 )
 ;ui_navigate.c:201: while(( c >= 32 ) && (c <= 127))
@@ -436,7 +436,7 @@ Select_00106:
 	sub	 e
 	jr	C,Select_00108
 ;ui_navigate.c:203: path[j+i] = c;
-	ld	l,(ix-8 )
+	ld	l,(ix-6 )
 	ld	h, &00
 	ld	c,(ix-5 )
 	ld	b, &00
@@ -447,10 +447,10 @@ Select_00106:
 ;ui_navigate.c:204: i++;
 	inc	(ix-5 )
 ;ui_navigate.c:205: c = subDir[i];
-	ld	a,(ix-7 )
+	ld	a,(ix-11 )
 	add	a, (ix-5 )
 	ld	l,a
-	ld	a,(ix-6 )
+	ld	a,(ix-10 )
 	adc	a,  &00
 	ld	h,a
 	ld	e,(hl)
@@ -458,7 +458,7 @@ Select_00106:
 Select_00108:
 ;ui_navigate.c:208: i += j;
 	ld	a,(ix-5 )
-	add	a, (ix-8 )
+	add	a, (ix-6 )
 	ld	e,a
 ;ui_navigate.c:210: while ( path[i-1] == 32 )
 Select_00109:
@@ -511,8 +511,8 @@ Select_00120:
 	ld	de, &1D00
 	add	hl,de
 ;ui_navigate.c:227: z80_memcpy( slot, dirEntry, sizeof(struct DirectoryEntry));
-	pop	de
-	push	de
+	ld	e,(ix-8 )
+	ld	d,(ix-7 )
 	push	hl
 	pop	iy
 	push	bc

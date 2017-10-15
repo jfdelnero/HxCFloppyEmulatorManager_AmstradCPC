@@ -25,21 +25,6 @@ void InitScreen()
 __asm
 	ld a, 1
 	call &BC0E
-	
-	call &BD19
-	
-	ld bc, &0000
-	call &BC38
-	
-	xor a
-SetBlackPaletteLoop:
-	ld bc, 0
-	push af
-	call &BC32
-	pop af
-	inc a
-	cp 4
-	jr nz, SetBlackPaletteLoop
 __endasm;
 }
 
@@ -57,20 +42,12 @@ void InitProgram()
 	InitUI();
 	CLS();
 __asm
-	ld hl, &E000+80+80+80
-	ld (hl), 255
-	ld d, h
-	ld e, l
-	inc de
-	ld bc, 80-1
-	ldir
-	ld hl, &E800+80+80+80
-	ld (hl), 255
-	ld d, h
-	ld e, l
-	inc de
-	ld bc, 80-1
-	ldir
+	call &BD19
+
+	ld bc, &BC00+6
+	out (c), c
+	ld bc, &BD00+25
+	out (c), c
 __endasm;
 	
 	PrintEmptyLine();
@@ -78,7 +55,7 @@ __endasm;
 	
 	PrintEmptyLine();
 	
-	Println(" Init..");
+	Println(" Initializing..");
 	
 	if (!HxC_Init(directAccessStatusSector, &errorCode))
 	{

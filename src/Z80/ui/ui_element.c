@@ -17,13 +17,6 @@ __asm
 	
 	call CopyBackgroundToScreen
 	
-	call MC_WAIT_FLYBACK
-
-	ld bc, &BC00+6
-	out (c), c
-	ld bc, &BD00+25
-	out (c), c
-	
 	ld hl, Palette
 		
 	xor a

@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:37 2017
+; This file was generated Sun Oct 15 00:38:06 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -121,23 +121,23 @@ _fatfs_lfn_cache_entry:
 	jp	Z,fatfs_lfn_cache_entry_00112
 ;fat_misc.c:74: if (lfn->no_of_strings == 0)
 	ld	a,(ix+4 )
-	ld	(ix-2 ),a
-	ld	a,(ix+5 )
-	ld	(ix-1 ),a
-	ld	a,(ix-2 )
-	add	a,  &4F
 	ld	(ix-4 ),a
-	ld	a,(ix-1 )
-	adc	a,  &00
+	ld	a,(ix+5 )
 	ld	(ix-3 ),a
-	pop	hl
-	push	hl
+	ld	a,(ix-4 )
+	add	a,  &4F
+	ld	(ix-2 ),a
+	ld	a,(ix-3 )
+	adc	a,  &00
+	ld	(ix-1 ),a
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	a,(hl)
 	or	 a
 	jr	NZ,fatfs_lfn_cache_entry_00106
 ;fat_misc.c:75: lfn->no_of_strings = LFNIndex;
-	pop	hl
-	push	hl
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	(hl),c
 fatfs_lfn_cache_entry_00106:
 ;fat_misc.c:77: lfn->String[LFNIndex-1][0] = entryBuffer[1];
@@ -148,11 +148,11 @@ fatfs_lfn_cache_entry_00106:
 	add	a, a
 	add	a, a
 	add	a, c
-	ld	(ix-4 ), a
-	add	a, (ix-2 )
+	ld	(ix-2 ), a
+	add	a, (ix-4 )
 	ld	c,a
 	ld	a, &00
-	adc	a, (ix-1 )
+	adc	a, (ix-3 )
 	ld	b,a
 	ld	l, e
 	ld	h, d
@@ -160,11 +160,11 @@ fatfs_lfn_cache_entry_00106:
 	ld	a,(hl)
 	ld	(bc),a
 ;fat_misc.c:78: lfn->String[LFNIndex-1][1] = entryBuffer[3];
-	ld	a,(ix-4 )
-	add	a, (ix-2 )
+	ld	a,(ix-2 )
+	add	a, (ix-4 )
 	ld	c,a
 	ld	a, &00
-	adc	a, (ix-1 )
+	adc	a, (ix-3 )
 	ld	b,a
 	push	bc
 	pop	iy

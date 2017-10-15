@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:40 2017
+; This file was generated Sun Oct 15 00:38:09 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -115,16 +115,16 @@ ReadConfigFile_00102:
 	pop	bc
 ;hxc_config.c:101: do
 	ld	de, &0001
-	ld	hl, &002E
-	ex	(sp), hl
+	ld	(ix-2 ), &2E
+	ld	(ix-1 ), &00
 ReadConfigFile_00105:
 ;hxc_config.c:103: if( !( iSlot & 3 ) )
 	ld	a,e
 	and	  &03
-	ld	(ix-2 ),a
-	ld	(ix-1 ),  &00
+	ld	(ix-4 ),a
+	ld	(ix-3 ),  &00
 	ld	a,  &00
-	or	(ix-2 )
+	or	(ix-4 )
 	jr	NZ,ReadConfigFile_00104
 ;hxc_config.c:105: fl_fread( HXC_SECTORDATA, 1, 512 , file );
 	push	bc
@@ -144,15 +144,15 @@ ReadConfigFile_00105:
 	pop	bc
 ReadConfigFile_00104:
 ;hxc_config.c:108: memcpy( &slots[ iSlot ], &sectorData[ ( iSlot & 3 ) * 128 ], sizeof(struct DiskInDrive) );		
-	ld	a,(ix-6 )
+	ld	a,(ix-2 )
 	add	a,  &00
 	ld	h,a
-	ld	a,(ix-5 )
+	ld	a,(ix-1 )
 	adc	a,  &1D
-	ld	(ix-4 ), h
-	ld	(ix-3 ), a
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	(ix-6 ), h
+	ld	(ix-5 ), a
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
@@ -164,19 +164,19 @@ ReadConfigFile_00104:
 	ld	de, &2100
 	add	hl, de
 	push	bc
-	ld	e,(ix-4 )
-	ld	d,(ix-3 )
+	ld	e,(ix-6 )
+	ld	d,(ix-5 )
 	ld	bc, &002E
 	ldir
 	pop	bc
 	pop	de
 ;hxc_config.c:109: iSlot++;
-	ld	a,(ix-6 )
+	ld	a,(ix-2 )
 	add	a,  &2E
-	ld	(ix-6 ),a
-	ld	a,(ix-5 )
+	ld	(ix-2 ),a
+	ld	a,(ix-1 )
 	adc	a,  &00
-	ld	(ix-5 ),a
+	ld	(ix-1 ),a
 	inc	de
 ;hxc_config.c:110: } while ( iSlot < configFile->number_of_slot );
 	ld	hl, &1B16
@@ -224,12 +224,11 @@ _WriteConfigFile:
 	call	_fl_fopen
 	pop	af
 	pop	af
-	inc	sp
-	inc	sp
-	push	hl
+	ld	(ix-23 ),l
 ;hxc_config.c:134: if ( !file )
-	ld	a,(ix-25 )
-	or	(ix-26 )
+	ld	(ix-22 ), h
+	ld	a, h
+	or	(ix-23 )
 	jr	NZ,WriteConfigFile_00102
 ;hxc_config.c:136: return OPERATIONRESULT_ERROR;
 	ld	l, &00
@@ -241,16 +240,16 @@ WriteConfigFile_00102:
 	ld	(ix-1 ), &00
 ;hxc_config.c:143: slot_index = GetLastSetSlot();
 	call	_GetLastSetSlot
-	ld	(ix-17 ),l
+	ld	(ix-21 ),l
 ;hxc_config.c:145: iSlot = 1;
-	ld	(ix-21 ), &01
-	ld	(ix-20 ), &00
+	ld	(ix-16 ), &01
+	ld	(ix-15 ), &00
 ;hxc_config.c:148: sdfecfg_file = HXC_SECTORDATA;
-	ld	(ix-13 ), &00
-	ld	(ix-12 ), &21
-;hxc_config.c:150: floppySelectorIndex = 128; // first slot offset
-	ld	(ix-19 ), &80
 	ld	(ix-18 ), &00
+	ld	(ix-17 ), &21
+;hxc_config.c:150: floppySelectorIndex = 128; // first slot offset
+	ld	(ix-20 ), &80
+	ld	(ix-19 ), &00
 ;hxc_config.c:151: z80_memset( sdfecfg_file, 0, 512 ); // clear sector
 	ld	hl, &0200
 	push	hl
@@ -264,61 +263,61 @@ WriteConfigFile_00102:
 	pop	af
 	inc	sp
 ;hxc_config.c:152: sect_nb = 2; // slots sector offset
-	ld	(ix-3 ), &02
+	ld	(ix-5 ), &02
 ;hxc_config.c:154: do
-	ld	(ix-22 ), &02
-	ld	(ix-24 ), &01
-	ld	(ix-23 ), &00
+	ld	(ix-12 ), &02
 	ld	(ix-14 ), &01
-	ld	(ix-9 ), &2E
-	ld	(ix-8 ), &00
+	ld	(ix-13 ), &00
+	ld	(ix-24 ), &01
+	ld	(ix-4 ), &2E
+	ld	(ix-3 ), &00
 WriteConfigFile_00111:
 ;hxc_config.c:157: slot = &slots[i];
-	ld	a,(ix-9 )
+	ld	a,(ix-4 )
 	add	a,  &00
-	ld	(ix-16 ),a
-	ld	a,(ix-8 )
+	ld	(ix-26 ),a
+	ld	a,(ix-3 )
 	adc	a,  &1D
-	ld	(ix-15 ),a
+	ld	(ix-25 ),a
 ;hxc_config.c:159: if (slot->DirEnt.size) // valid slot found
-	ld	a,(ix-16 )
-	ld	(ix-11 ),a
-	ld	a,(ix-15 )
-	ld	(ix-10 ),a
-	ld	l,(ix-11 )
-	ld	h,(ix-10 )
+	ld	a,(ix-26 )
+	ld	(ix-7 ),a
+	ld	a,(ix-25 )
+	ld	(ix-6 ),a
+	ld	l,(ix-7 )
+	ld	h,(ix-6 )
 	ld	de,  &0011
 	add	hl, de
 	ld	a,(hl)
-	ld	(ix-7 ),a
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-6 ),a
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-5 ),a
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-4 ),a
-;hxc_config.c:174: if (fl_fswrite((unsigned char*)sdfecfg_file, 1, sect_nb, file ) != 1)
-	ld	a,(ix-26 )
 	ld	(ix-11 ),a
-	ld	a,(ix-25 )
+	inc	hl
+	ld	a,(hl)
 	ld	(ix-10 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-9 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-8 ),a
+;hxc_config.c:174: if (fl_fswrite((unsigned char*)sdfecfg_file, 1, sect_nb, file ) != 1)
+	ld	a,(ix-23 )
+	ld	(ix-7 ),a
+	ld	a,(ix-22 )
+	ld	(ix-6 ),a
 ;hxc_config.c:159: if (slot->DirEnt.size) // valid slot found
-	ld	a,(ix-4 )
-	or	 (ix-5 )
-	or	 (ix-6 )
-	or	(ix-7 )
+	ld	a,(ix-8 )
+	or	 (ix-9 )
+	or	 (ix-10 )
+	or	(ix-11 )
 	jp	Z,WriteConfigFile_00110
 ;hxc_config.c:162: z80_memcpy( &sdfecfg_file[floppySelectorIndex], slot, sizeof(struct DiskInDrive));
-	ld	e,(ix-16 )
-	ld	d,(ix-15 )
-	ld	a,(ix-19 )
-	add	a, (ix-13 )
+	pop	de
+	push	de
+	ld	a,(ix-20 )
+	add	a, (ix-18 )
 	ld	l,a
-	ld	a,(ix-18 )
-	adc	a, (ix-12 )
+	ld	a,(ix-19 )
+	adc	a, (ix-17 )
 	ld	h,a
 	ld	bc, &002E
 	push	bc
@@ -329,50 +328,50 @@ WriteConfigFile_00111:
 	add	hl,sp
 	ld	sp,hl
 ;hxc_config.c:164: if ( i == slot_index )
-	ld	a,(ix-14 )
-	sub	 (ix-17 )
+	ld	a,(ix-24 )
+	sub	 (ix-21 )
 	jr	NZ,WriteConfigFile_00104
 ;hxc_config.c:166: real_slot_index = (unsigned short) iSlot;
-	ld	a,(ix-24 )
+	ld	a,(ix-14 )
 	ld	(ix-2 ),a
-	ld	a,(ix-23 )
+	ld	a,(ix-13 )
 	ld	(ix-1 ),a
 WriteConfigFile_00104:
 ;hxc_config.c:169: iSlot++;
-	inc	(ix-24 )
+	inc	(ix-14 )
 	jr	NZ,WriteConfigFile_00154
-	inc	(ix-23 )
+	inc	(ix-13 )
 WriteConfigFile_00154:
-	ld	a,(ix-24 )
-	ld	(ix-21 ),a
-	ld	a,(ix-23 )
-	ld	(ix-20 ),a
+	ld	a,(ix-14 )
+	ld	(ix-16 ),a
+	ld	a,(ix-13 )
+	ld	(ix-15 ),a
 ;hxc_config.c:170: floppySelectorIndex = (floppySelectorIndex+128)& &1FF;
-	ld	a,(ix-19 )
+	ld	a,(ix-20 )
 	add	a,  &80
 	ld	h,a
-	ld	a,(ix-18 )
+	ld	a,(ix-19 )
 	adc	a,  &00
 	ld	l,a
-	ld	(ix-19 ),h
+	ld	(ix-20 ),h
 	ld	a,l
 	and	  &01
-	ld	(ix-18 ),a
+	ld	(ix-19 ),a
 ;hxc_config.c:172: if ( !(iSlot& &3) ) // need to change to next sector
-	ld	a,(ix-24 )
+	ld	a,(ix-14 )
 	and	  &03
 	jr	NZ,WriteConfigFile_00110
 ;hxc_config.c:174: if (fl_fswrite((unsigned char*)sdfecfg_file, 1, sect_nb, file ) != 1)
-	ld	l,(ix-22 )
+	ld	l,(ix-12 )
 	ld	h, &00
-	ld	c,(ix-11 )
-	ld	b,(ix-10 )
+	ld	c,(ix-7 )
+	ld	b,(ix-6 )
 	push	bc
 	push	hl
 	ld	hl, &0001
 	push	hl
-	ld	l,(ix-13 )
-	ld	h,(ix-12 )
+	ld	l,(ix-18 )
+	ld	h,(ix-17 )
 	push	hl
 	call	_fl_fswrite
 	pop	af
@@ -390,21 +389,21 @@ WriteConfigFile_00157:
 	jp	WriteConfigFile_00120
 WriteConfigFile_00106:
 ;hxc_config.c:179: sect_nb++;
-	inc	(ix-22 )
-	ld	a,(ix-22 )
-	ld	(ix-3 ),a
-;hxc_config.c:181: z80_memset( sdfecfg_file, 0, 512 ); // clear next sector
-	ld	a,(ix-13 )
-	ld	(ix-7 ),a
+	inc	(ix-12 )
 	ld	a,(ix-12 )
-	ld	(ix-6 ),a
+	ld	(ix-5 ),a
+;hxc_config.c:181: z80_memset( sdfecfg_file, 0, 512 ); // clear next sector
+	ld	a,(ix-18 )
+	ld	(ix-11 ),a
+	ld	a,(ix-17 )
+	ld	(ix-10 ),a
 	ld	hl, &0200
 	push	hl
 	xor	 a
 	push	af
 	inc	sp
-	ld	l,(ix-7 )
-	ld	h,(ix-6 )
+	ld	l,(ix-11 )
+	ld	h,(ix-10 )
 	push	hl
 	call	_z80_memset
 	pop	af
@@ -412,47 +411,47 @@ WriteConfigFile_00106:
 	inc	sp
 WriteConfigFile_00110:
 ;hxc_config.c:185: i++;
-	ld	a,(ix-9 )
+	ld	a,(ix-4 )
 	add	a,  &2E
-	ld	(ix-9 ),a
-	ld	a,(ix-8 )
+	ld	(ix-4 ),a
+	ld	a,(ix-3 )
 	adc	a,  &00
-	ld	(ix-8 ),a
-	inc	(ix-14 )
+	ld	(ix-3 ),a
+	inc	(ix-24 )
 ;hxc_config.c:186: } while( i < SLOTCOUNT );
-	ld	a,(ix-14 )
+	ld	a,(ix-24 )
 	sub	  &10
 	jp	C,WriteConfigFile_00111
 ;hxc_config.c:188: if ( iSlot& &3 )
-	ld	a,(ix-21 )
+	ld	a,(ix-16 )
 	and	  &03
 	jr	Z,WriteConfigFile_00117
 ;hxc_config.c:190: if (fl_fswrite( (unsigned char*)sdfecfg_file, 1, sect_nb, file) != 1)
-	ld	a,(ix-3 )
-	ld	(ix-7 ),a
-	ld	(ix-6 ), &00
-	ld	l,(ix-11 )
-	ld	h,(ix-10 )
-	push	hl
+	ld	a,(ix-5 )
+	ld	(ix-11 ),a
+	ld	(ix-10 ), &00
 	ld	l,(ix-7 )
 	ld	h,(ix-6 )
 	push	hl
+	ld	l,(ix-11 )
+	ld	h,(ix-10 )
+	push	hl
 	ld	hl, &0001
 	push	hl
-	ld	l,(ix-13 )
-	ld	h,(ix-12 )
+	ld	l,(ix-18 )
+	ld	h,(ix-17 )
 	push	hl
 	call	_fl_fswrite
 	pop	af
 	pop	af
 	pop	af
 	pop	af
-	ld	(ix-6 ),h
-	ld	(ix-7 ), l
+	ld	(ix-10 ),h
+	ld	(ix-11 ), l
 	ld	a, l
 	dec	a
 	jr	NZ,WriteConfigFile_00159
-	ld	a,(ix-6 )
+	ld	a,(ix-10 )
 	or	 a
 	jr	Z,WriteConfigFile_00117
 WriteConfigFile_00159:
@@ -467,15 +466,15 @@ WriteConfigFile_00117:
 	push	hl
 	ld	hl, &0000
 	push	hl
-	ld	l,(ix-11 )
-	ld	h,(ix-10 )
+	ld	l,(ix-7 )
+	ld	h,(ix-6 )
 	push	hl
 	call	_fl_fseek
 	ld	hl, &0008
 	add	hl,sp
 	ld	sp,hl
 ;hxc_config.c:198: configFile->number_of_slot = iSlot;
-	ld	a,(ix-21 )
+	ld	a,(ix-16 )
 	ld	hl, &1B16
 	ld	(hl),a
 ;hxc_config.c:199: configFile->slot_index = real_slot_index;
@@ -483,8 +482,8 @@ WriteConfigFile_00117:
 	ld	l,  &17
 	ld	(hl),a
 ;hxc_config.c:201: if (fl_fswrite( (unsigned char*)configFile, 1, 0, file ) != 1)
-	ld	l,(ix-11 )
-	ld	h,(ix-10 )
+	ld	l,(ix-7 )
+	ld	h,(ix-6 )
 	push	hl
 	ld	hl, &0000
 	push	hl
@@ -508,8 +507,8 @@ WriteConfigFile_00160:
 	jr	WriteConfigFile_00120
 WriteConfigFile_00119:
 ;hxc_config.c:206: fl_fclose(file);
-	ld	l,(ix-11 )
-	ld	h,(ix-10 )
+	ld	l,(ix-7 )
+	ld	h,(ix-6 )
 	push	hl
 	call	_fl_fclose
 	pop	af

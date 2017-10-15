@@ -22,7 +22,7 @@ void main()
 	unsigned char key;
 	char isQuit;
 	
-__asm	
+__asm
 	call KL_CURR_SELECTION	
 	call KL_U_ROM_DISABLE
 	

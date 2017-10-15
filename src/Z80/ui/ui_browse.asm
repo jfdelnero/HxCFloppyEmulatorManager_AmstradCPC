@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:41 2017
+; This file was generated Sun Oct 15 00:38:10 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -236,10 +236,10 @@ _BrowsePage:
 	add	hl,sp
 	ld	sp,hl
 ;ui_browse.c:206: for (i=0; i<SCREEN_MAXSLOTS; i++)
-	ld	(ix-10 ), &00
-	ld	(ix-9 ), &00
 	ld	(ix-12 ), &00
-	ld	(ix-11 ), &25
+	ld	(ix-11 ), &00
+	ld	(ix-10 ), &00
+	ld	(ix-9 ), &25
 BrowsePage_00126:
 ;ui_browse.c:266: readdir_res = fl_list_readdir(nextDirListStatus, &dir_entry);
 	ld	hl,_dir_entry
@@ -262,8 +262,8 @@ BrowsePage_00126:
 	ld	hl, _dir_entry + 260
 	ld	h,(hl)
 ;ui_browse.c:274: i--;
-	ld	e,(ix-10 )
-	ld	d,(ix-9 )
+	ld	e,(ix-12 )
+	ld	d,(ix-11 )
 	dec	de
 ;ui_browse.c:270: if (dir_entry.is_dir)
 	ld	a,h
@@ -277,8 +277,8 @@ BrowsePage_00126:
 	sub	  &2E
 	jr	Z,BrowsePage_00115
 ;ui_browse.c:274: i--;
-	ld	(ix-10 ),e
-	ld	(ix-9 ),d
+	ld	(ix-12 ),e
+	ld	(ix-11 ),d
 ;ui_browse.c:275: continue;
 	jp	BrowsePage_00124
 BrowsePage_00109:
@@ -307,14 +307,14 @@ BrowsePage_00109:
 	or	 a
 	jr	NZ,BrowsePage_00115
 ;ui_browse.c:284: i--;
-	ld	(ix-10 ),e
-	ld	(ix-9 ),d
+	ld	(ix-12 ),e
+	ld	(ix-11 ),d
 ;ui_browse.c:285: continue;
 	jp	BrowsePage_00124
 BrowsePage_00114:
 ;ui_browse.c:292: if ( i == 0 )
-	ld	a,(ix-9 )
-	or	(ix-10 )
+	ld	a,(ix-11 )
+	or	(ix-12 )
 	jr	NZ,BrowsePage_00115
 ;ui_browse.c:294: CurrentPage--;
 	ld	hl, _CurrentPage+0
@@ -323,10 +323,10 @@ BrowsePage_00114:
 	jp	BrowsePage_00127
 BrowsePage_00115:
 ;ui_browse.c:299: z80_memcpy( dirEntries->longName, dir_entry.filename, 16);
-	ld	a,(ix-12 )
+	ld	a,(ix-10 )
 	add	a,  &15
 	ld	e,a
-	ld	a,(ix-11 )
+	ld	a,(ix-9 )
 	adc	a,  &00
 	ld	d,a
 	push	de
@@ -349,10 +349,10 @@ BrowsePage_00115:
 	add	hl,de
 	ld	(hl), &00
 ;ui_browse.c:325: dirEntries->size = ENDIAN_32BIT(dir_entry.size);
-	ld	a,(ix-12 )
+	ld	a,(ix-10 )
 	add	a,  &11
 	ld	(ix-2 ),a
-	ld	a,(ix-11 )
+	ld	a,(ix-9 )
 	adc	a,  &00
 	ld	(ix-1 ),a
 ;ui_browse.c:302: if (readdir_res)
@@ -360,8 +360,8 @@ BrowsePage_00115:
 	or	c
 	jp	Z,BrowsePage_00122
 ;ui_browse.c:304: if ( i == 0 )
-	ld	a,(ix-9 )
-	or	(ix-10 )
+	ld	a,(ix-11 )
+	or	(ix-12 )
 	jr	NZ,BrowsePage_00117
 ;ui_browse.c:306: CLS();
 	call	_CLS
@@ -375,12 +375,12 @@ BrowsePage_00117:
 	add	hl, de
 	ld	c,(hl)
 ;ui_browse.c:315: dirEntries->attributes =  &10;
-	ld	a,(ix-12 )
+	ld	a,(ix-10 )
 	add	a,  &0C
-	ld	(ix-4 ),a
-	ld	a,(ix-11 )
+	ld	(ix-8 ),a
+	ld	a,(ix-9 )
 	adc	a,  &00
-	ld	(ix-3 ),a
+	ld	(ix-7 ),a
 ;ui_browse.c:311: if (dir_entry.is_dir)
 	ld	a,c
 	or	 a
@@ -391,14 +391,14 @@ BrowsePage_00117:
 	call	_Print
 	pop	af
 ;ui_browse.c:315: dirEntries->attributes =  &10;
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-8 )
+	ld	h,(ix-7 )
 	ld	(hl), &10
 	jr	BrowsePage_00120
 BrowsePage_00119:
 ;ui_browse.c:319: dirEntries->attributes =  &00;
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-8 )
+	ld	h,(ix-7 )
 	ld	(hl), &00
 BrowsePage_00120:
 ;ui_browse.c:322: PrintlnTab( dir_entry.filename );
@@ -407,21 +407,21 @@ BrowsePage_00120:
 	call	_PrintlnTab
 	pop	af
 ;ui_browse.c:324: dirEntries->firstCluster = ENDIAN_32BIT(dir_entry.cluster);
-	ld	a,(ix-12 )
+	ld	a,(ix-10 )
 	add	a,  &0D
 	ld	e,a
-	ld	a,(ix-11 )
+	ld	a,(ix-9 )
 	adc	a,  &00
 	ld	d,a
 	push	de
 	ld	de, _dir_entry + 261
-	ld	hl,  &0008
+	ld	hl,  &000A
 	add	hl, sp
 	ex	de, hl
 	ld	bc,  &0004
 	ldir
 	pop	de
-	ld	hl,  &0006
+	ld	hl,  &0008
 	add	hl, sp
 	ld	bc,  &0004
 	ldir
@@ -459,21 +459,21 @@ BrowsePage_00122:
 	ld	(_EndPage + 0),a
 BrowsePage_00123:
 ;ui_browse.c:335: dirEntries += 1;
-	ld	a,(ix-12 )
+	ld	a,(ix-10 )
 	add	a,  &26
-	ld	(ix-12 ),a
-	ld	a,(ix-11 )
+	ld	(ix-10 ),a
+	ld	a,(ix-9 )
 	adc	a,  &00
-	ld	(ix-11 ),a
+	ld	(ix-9 ),a
 BrowsePage_00124:
 ;ui_browse.c:206: for (i=0; i<SCREEN_MAXSLOTS; i++)
-	inc	(ix-10 )
+	inc	(ix-12 )
 	jr	NZ,BrowsePage_00168
-	inc	(ix-9 )
+	inc	(ix-11 )
 BrowsePage_00168:
-	ld	a,(ix-10 )
+	ld	a,(ix-12 )
 	sub	  &15
-	ld	a,(ix-9 )
+	ld	a,(ix-11 )
 	rla
 	ccf
 	rra

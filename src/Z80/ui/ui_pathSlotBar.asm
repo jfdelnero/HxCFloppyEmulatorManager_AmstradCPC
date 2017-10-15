@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:43 2017
+; This file was generated Sun Oct 15 00:38:12 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -49,11 +49,11 @@ _RefreshPathSlot:
 	ld (hl), 0
 ;ui_pathSlotBar.c:40: selectedSlot = GetSelectedSlot();
 	call	_GetSelectedSlot
-	ld	(ix-18 ),l
+	ld	(ix-11 ),l
 ;ui_pathSlotBar.c:43: offset = 0;
-	ld	(ix-13 ), &00
+	ld	(ix-17 ), &00
 ;ui_pathSlotBar.c:44: if (selectedSlot<10)
-	ld	a,(ix-18 )
+	ld	a,(ix-11 )
 	xor	  &80
 	sub	  &8A
 	jr	NC,RefreshPathSlot_00102
@@ -62,7 +62,7 @@ _RefreshPathSlot:
 	add	hl,sp
 	ld	(hl), &30
 ;ui_pathSlotBar.c:47: offset = 1;
-	ld	(ix-13 ), &01
+	ld	(ix-17 ), &01
 RefreshPathSlot_00102:
 ;ui_pathSlotBar.c:49: uitoa( selectedSlot, &slotLabel[offset], 10);	
 	ld	hl, &0000
@@ -70,25 +70,25 @@ RefreshPathSlot_00102:
 	ld	(ix-2 ),l
 	ld	(ix-1 ),h
 	ld	a,(ix-2 )
-	add	a, (ix-13 )
-	ld	(ix-4 ),a
+	add	a, (ix-17 )
+	ld	(ix-10 ),a
 	ld	a,(ix-1 )
 	adc	a,  &00
-	ld	(ix-3 ),a
-	ld	a,(ix-18 )
-	ld	(ix-10 ),a
-	ld	a,(ix-18 )
+	ld	(ix-9 ),a
+	ld	a,(ix-11 )
+	ld	(ix-4 ),a
+	ld	a,(ix-11 )
 	rla
 	sbc	a, a
-	ld	(ix-9 ),a
+	ld	(ix-3 ),a
 	ld	a, &0A
 	push	af
 	inc	sp
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
-	push	hl
 	ld	l,(ix-10 )
 	ld	h,(ix-9 )
+	push	hl
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	push	hl
 	call	_uitoa
 	pop	af
@@ -97,15 +97,15 @@ RefreshPathSlot_00102:
 ;ui_pathSlotBar.c:50: slotLabel[2] = ':';
 	ld	a,(ix-2 )
 	add	a,  &02
-	ld	(ix-10 ),a
+	ld	(ix-4 ),a
 	ld	a,(ix-1 )
 	adc	a,  &00
-	ld	(ix-9 ),a
-	ld	l,(ix-10 )
-	ld	h,(ix-9 )
+	ld	(ix-3 ),a
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl), &3A
 ;ui_pathSlotBar.c:53: diskInDrive = &slots[ selectedSlot ];
-	ld	c,(ix-18 )
+	ld	c,(ix-11 )
 	ld	a, c
 	rlc	a
 	sbc	a, a
@@ -120,26 +120,23 @@ RefreshPathSlot_00102:
 	add	hl, hl
 	add	hl, bc
 	add	hl, hl
-	ld	(ix-10 ),l
-	ld	(ix-9 ),h
-	ld	a,(ix-10 )
+	ld	(ix-4 ),l
+	ld	(ix-3 ),h
+	ld	a,(ix-4 )
 	add	a,  &00
-	ld	(ix-20 ),a
-	ld	a,(ix-9 )
-	adc	a,  &1D
 	ld	(ix-19 ),a
+	ld	a,(ix-3 )
+	adc	a,  &1D
+	ld	(ix-18 ),a
 ;ui_pathSlotBar.c:55: dirEntSize = diskInDrive->DirEnt.size;
-	ld	a,(ix-20 )
-	ld	(ix-10 ),a
 	ld	a,(ix-19 )
-	ld	(ix-9 ),a
-	ld	l,(ix-10 )
-	ld	h,(ix-9 )
+	ld	(ix-4 ),a
+	ld	a,(ix-18 )
+	ld	(ix-3 ),a
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	de,  &0011
 	add	hl, de
-	ld	a,(hl)
-	ld	(ix-17 ),a
-	inc	hl
 	ld	a,(hl)
 	ld	(ix-16 ),a
 	inc	hl
@@ -148,53 +145,56 @@ RefreshPathSlot_00102:
 	inc	hl
 	ld	a,(hl)
 	ld	(ix-14 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-13 ),a
 ;ui_pathSlotBar.c:62: z80_memcpy(&slotLabel[3], diskInDrive->DirEnt.longName, dirEntSize );
 	ld	a,(ix-2 )
 	add	a,  &03
-	ld	(ix-10 ),a
+	ld	(ix-4 ),a
 	ld	a,(ix-1 )
 	adc	a,  &00
-	ld	(ix-9 ),a
+	ld	(ix-3 ),a
 ;ui_pathSlotBar.c:56: if (dirEntSize)
-	ld	a,(ix-14 )
+	ld	a,(ix-13 )
+	or	 (ix-14 )
 	or	 (ix-15 )
-	or	 (ix-16 )
-	or	(ix-17 )
+	or	(ix-16 )
 	jp	Z,RefreshPathSlot_00106
 ;ui_pathSlotBar.c:58: if (dirEntSize>15)
 	ld	a, &0F
-	cp	 (ix-17 )
-	ld	a, &00
-	sbc	a, (ix-16 )
+	cp	 (ix-16 )
 	ld	a, &00
 	sbc	a, (ix-15 )
 	ld	a, &00
 	sbc	a, (ix-14 )
+	ld	a, &00
+	sbc	a, (ix-13 )
 	jr	NC,RefreshPathSlot_00104
 ;ui_pathSlotBar.c:60: dirEntSize = 16;
-	ld	(ix-17 ), &10
+	ld	(ix-16 ), &10
 	xor	 a
-	ld	(ix-16 ),a
 	ld	(ix-15 ),a
 	ld	(ix-14 ),a
+	ld	(ix-13 ),a
 RefreshPathSlot_00104:
 ;ui_pathSlotBar.c:62: z80_memcpy(&slotLabel[3], diskInDrive->DirEnt.longName, dirEntSize );
-	ld	a,(ix-17 )
-	ld	(ix-4 ),a
 	ld	a,(ix-16 )
-	ld	(ix-3 ),a
-	ld	a,(ix-20 )
+	ld	(ix-10 ),a
+	ld	a,(ix-15 )
+	ld	(ix-9 ),a
+	ld	a,(ix-19 )
 	add	a,  &15
 	ld	(ix-6 ),a
-	ld	a,(ix-19 )
+	ld	a,(ix-18 )
 	adc	a,  &00
 	ld	(ix-5 ),a
-	ld	a,(ix-10 )
+	ld	a,(ix-4 )
 	ld	(ix-8 ),a
-	ld	a,(ix-9 )
+	ld	a,(ix-3 )
 	ld	(ix-7 ),a
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-10 )
+	ld	h,(ix-9 )
 	push	hl
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
@@ -207,7 +207,7 @@ RefreshPathSlot_00104:
 	add	hl,sp
 	ld	sp,hl
 ;ui_pathSlotBar.c:63: slotLabel[3+dirEntSize]=0;
-	ld	a,(ix-17 )
+	ld	a,(ix-16 )
 	add	a,  &03
 	ld	(ix-8 ),a
 	ld	a,(ix-2 )
@@ -222,8 +222,8 @@ RefreshPathSlot_00104:
 	jr	RefreshPathSlot_00107
 RefreshPathSlot_00106:
 ;ui_pathSlotBar.c:67: slotLabel[3]=0;
-	ld	l,(ix-10 )
-	ld	h,(ix-9 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl), &00
 RefreshPathSlot_00107:
 ;ui_pathSlotBar.c:70: len = z80_strlen( slotLabel );
@@ -232,13 +232,13 @@ RefreshPathSlot_00107:
 	push	hl
 	call	_z80_strlen
 	pop	af
-	ld	(ix-11 ),l
+	ld	(ix-20 ),l
 ;ui_pathSlotBar.c:71: maxPathSize = 80-len-1;
 	ld	a, &4F
-	sub	 (ix-11 )
+	sub	 (ix-20 )
 	ld	(ix-12 ),a
 ;ui_pathSlotBar.c:72: z80_memcpy( &pathSlotBuffer[maxPathSize+1], slotLabel, len );
-	ld	e,(ix-11 )
+	ld	e,(ix-20 )
 	ld	d, &00
 	ld	c,(ix-2 )
 	ld	b,(ix-1 )
@@ -272,11 +272,11 @@ RefreshPathSlot_00107:
 	call	_strlen
 	pop	af
 ;ui_pathSlotBar.c:87: z80_strcpy(pathSlotBuffer, &path[len-maxPathSize]);
-	ld	(ix-11 ), l
+	ld	(ix-20 ), l
 	ld	(ix-8 ), l
 	ld	(ix-7 ), &00
 ;ui_pathSlotBar.c:85: if ( len >= maxPathSize)
-	ld	a,(ix-11 )
+	ld	a,(ix-20 )
 	sub	 (ix-12 )
 	jr	C,RefreshPathSlot_00109
 ;ui_pathSlotBar.c:87: z80_strcpy(pathSlotBuffer, &path[len-maxPathSize]);
@@ -315,7 +315,7 @@ RefreshPathSlot_00109:
 	pop	af
 	pop	af
 ;ui_pathSlotBar.c:93: pathSlotBuffer[len] = ' ';
-	ld	a,(ix-11 )
+	ld	a,(ix-20 )
 	add	a,  &84
 	ld	l,a
 	ld	a, &00
@@ -327,7 +327,7 @@ RefreshPathSlot_00127:
 	ld	b, &00
 RefreshPathSlot_00117:
 	ld	a,b
-	sub	 (ix-11 )
+	sub	 (ix-20 )
 	jr	NC,RefreshPathSlot_00113
 ;ui_pathSlotBar.c:98: if (pathSlotBuffer[i] == '/')
 	ld	a,b
@@ -349,7 +349,7 @@ RefreshPathSlot_00118:
 RefreshPathSlot_00113:
 ;ui_pathSlotBar.c:104: if (len>1)
 	ld	a, &01
-	sub	 (ix-11 )
+	sub	 (ix-20 )
 	jr	NC,RefreshPathSlot_00115
 ;ui_pathSlotBar.c:106: pathSlotBuffer[len-1] = ' ';
 	ld	l,(ix-8 )

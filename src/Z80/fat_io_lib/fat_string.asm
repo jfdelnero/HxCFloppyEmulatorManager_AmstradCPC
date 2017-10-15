@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:38 2017
+; This file was generated Sun Oct 15 00:38:07 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -178,7 +178,7 @@ fatfs_get_substring_00102:
 	sub	  &2F
 	jr	NZ,fatfs_get_substring_00109
 ;fat_string.c:112: expectedchar = '/';
-	ld	(ix-9 ), &2F
+	ld	(ix-11 ), &2F
 ;fat_string.c:113: path++;
 	inc	de
 	ld	(ix+4 ),e
@@ -201,7 +201,7 @@ fatfs_get_substring_00109:
 	jr	NZ,fatfs_get_substring_00105
 fatfs_get_substring_00104:
 ;fat_string.c:117: expectedchar = '\\';
-	ld	(ix-9 ), &5C
+	ld	(ix-11 ), &5C
 ;fat_string.c:118: path += 3;
 	inc	de
 	inc	de
@@ -220,109 +220,108 @@ fatfs_get_substring_00110:
 	push	hl
 	call	_strlen
 	pop	af
-	inc	sp
-	inc	sp
-	push	hl
+	ld	(ix-15 ),l
+	ld	(ix-14 ),h
 ;fat_string.c:127: for (i = 0; i<pathlen; i++)
 	ld	a,(ix+10 )
 	add	a, &FF
-	ld	(ix-4 ),a
+	ld	(ix-2 ),a
 	ld	a,(ix+11 )
 	adc	a, &FF
-	ld	(ix-3 ),a
-	ld	(ix-11 ), &00
-	ld	(ix-10 ), &00
-	ld	(ix-15 ), &00
-	ld	(ix-14 ), &00
-	ld	a,(ix+4 )
-	ld	(ix-2 ),a
-	ld	a,(ix+5 )
 	ld	(ix-1 ),a
+	ld	hl, &0000
+	ex	(sp), hl
 	ld	(ix-13 ), &00
 	ld	(ix-12 ), &00
+	ld	a,(ix+4 )
+	ld	(ix-8 ),a
+	ld	a,(ix+5 )
+	ld	(ix-7 ),a
+	ld	(ix-10 ), &00
+	ld	(ix-9 ), &00
 fatfs_get_substring_00122:
-	ld	a,(ix-13 )
-	sub	 (ix-17 )
-	ld	a,(ix-12 )
-	sbc	a, (ix-16 )
+	ld	a,(ix-10 )
+	sub	 (ix-15 )
+	ld	a,(ix-9 )
+	sbc	a, (ix-14 )
 	jp	PO, fatfs_get_substring_00163
 	xor	  &80
 fatfs_get_substring_00163:
 	jp	P,fatfs_get_substring_00117
 ;fat_string.c:130: if (*path == expectedchar) levels++;
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-8 )
+	ld	h,(ix-7 )
 	ld	a,(hl)
-	ld	(ix-7 ), a
-	sub	 (ix-9 )
+	ld	(ix-6 ), a
+	sub	 (ix-11 )
 	jr	NZ,fatfs_get_substring_00164
 	ld	a, &01
 	jr	fatfs_get_substring_00165
 fatfs_get_substring_00164:
 	xor	a
 fatfs_get_substring_00165:
-	ld	(ix-8 ), a
+	ld	(ix-3 ), a
 	or	 a
 	jr	Z,fatfs_get_substring_00112
-	inc	(ix-11 )
+	inc	(ix-17 )
 	jr	NZ,fatfs_get_substring_00166
-	inc	(ix-10 )
+	inc	(ix-16 )
 fatfs_get_substring_00166:
 fatfs_get_substring_00112:
 ;fat_string.c:133: if ( (levels == levelreq) && (*path != expectedchar) && (copypnt < (max_len-1))) 
-	ld	a,(ix-11 )
+	ld	a,(ix-17 )
 	sub	 (ix+6 )
 	jr	NZ,fatfs_get_substring_00114
-	ld	a,(ix-10 )
+	ld	a,(ix-16 )
 	sub	 (ix+7 )
 	jr	NZ,fatfs_get_substring_00114
-	ld	a,(ix-8 )
+	ld	a,(ix-3 )
 	or	 a
 	jr	NZ,fatfs_get_substring_00114
-	ld	a,(ix-15 )
-	sub	 (ix-4 )
-	ld	a,(ix-14 )
-	sbc	a, (ix-3 )
+	ld	a,(ix-13 )
+	sub	 (ix-2 )
+	ld	a,(ix-12 )
+	sbc	a, (ix-1 )
 	jp	PO, fatfs_get_substring_00169
 	xor	  &80
 fatfs_get_substring_00169:
 	jp	P,fatfs_get_substring_00114
 ;fat_string.c:134: output[copypnt++] = *path;
-	ld	a,(ix-15 )
-	ld	(ix-6 ),a
-	ld	a,(ix-14 )
+	ld	a,(ix-13 )
 	ld	(ix-5 ),a
-	inc	(ix-15 )
+	ld	a,(ix-12 )
+	ld	(ix-4 ),a
+	inc	(ix-13 )
 	jr	NZ,fatfs_get_substring_00170
-	inc	(ix-14 )
+	inc	(ix-12 )
 fatfs_get_substring_00170:
 	ld	a,(ix+8 )
-	add	a, (ix-6 )
-	ld	(ix-6 ),a
-	ld	a,(ix+9 )
-	adc	a, (ix-5 )
+	add	a, (ix-5 )
 	ld	(ix-5 ),a
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
-	ld	a,(ix-7 )
+	ld	a,(ix+9 )
+	adc	a, (ix-4 )
+	ld	(ix-4 ),a
+	ld	l,(ix-5 )
+	ld	h,(ix-4 )
+	ld	a,(ix-6 )
 	ld	(hl),a
 fatfs_get_substring_00114:
 ;fat_string.c:137: *path++;
-	inc	(ix-2 )
+	inc	(ix-8 )
 	jr	NZ,fatfs_get_substring_00171
-	inc	(ix-1 )
+	inc	(ix-7 )
 fatfs_get_substring_00171:
 ;fat_string.c:127: for (i = 0; i<pathlen; i++)
-	inc	(ix-13 )
+	inc	(ix-10 )
 	jp	NZ,fatfs_get_substring_00122
-	inc	(ix-12 )
+	inc	(ix-9 )
 	jp	fatfs_get_substring_00122
 fatfs_get_substring_00117:
 ;fat_string.c:141: output[copypnt] = '\0';
-	ld	a,(ix-15 )
+	ld	a,(ix-13 )
 	add	a, (ix+8 )
 	ld	l,a
-	ld	a,(ix-14 )
+	ld	a,(ix-12 )
 	adc	a, (ix+9 )
 	ld	h,a
 	ld	(hl), &00
@@ -485,38 +484,38 @@ _FileString_StrCmpNoCase:
 	ld	sp,hl
 ;fat_string.c:194: while (n)
 	ld	a,(ix+8 )
-	ld	(ix-8 ),a
-	ld	a,(ix+9 )
-	ld	(ix-7 ),a
-	ld	a,(ix+4 )
-	ld	(ix-5 ),a
-	ld	a,(ix+5 )
-	ld	(ix-4 ),a
-	ld	a,(ix+6 )
-	ld	(ix-3 ),a
-	ld	a,(ix+7 )
 	ld	(ix-2 ),a
+	ld	a,(ix+9 )
+	ld	(ix-1 ),a
+	ld	a,(ix+4 )
+	ld	(ix-6 ),a
+	ld	a,(ix+5 )
+	ld	(ix-5 ),a
+	ld	a,(ix+6 )
+	ld	(ix-4 ),a
+	ld	a,(ix+7 )
+	ld	(ix-3 ),a
 FileString_StrCmpNoCase_00112:
-	ld	a,(ix-7 )
-	or	(ix-8 )
+	ld	a,(ix-1 )
+	or	(ix-2 )
 	jp	Z,FileString_StrCmpNoCase_00114
 ;fat_string.c:196: n--;
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	dec	hl
-	ld	(ix-8 ),l
-	ld	(ix-7 ),h
+	ld	(ix-2 ),l
+	ld	(ix-1 ),h
 ;fat_string.c:197: a = *s1;
-	ld	l,(ix-5 )
-	ld	h,(ix-4 )
+	ld	l,(ix-6 )
+	ld	h,(ix-5 )
 	ld	a,(hl)
-	ld	(ix-1 ), a
+	ld	(ix-7 ), a
 	ld	(ix-9 ),a
 ;fat_string.c:198: b = *s2;
-	ld	l,(ix-3 )
-	ld	h,(ix-2 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	a,(hl)
-	ld	(ix-6 ), a
+	ld	(ix-8 ), a
 	ld	e, a
 ;fat_string.c:201: if ((a>='A') && (a<='Z'))
 	ld	a,(ix-9 )
@@ -568,21 +567,21 @@ FileString_StrCmpNoCase_00105:
 ;fat_string.c:210: return diff;
 	jr	NZ,FileString_StrCmpNoCase_00115
 ;fat_string.c:213: if ( (*s1 == 0) || (*s2 == 0) )
-	ld	a,(ix-1 )
+	ld	a,(ix-7 )
 	or	 a
 	jr	Z,FileString_StrCmpNoCase_00114
-	ld	a,(ix-6 )
+	ld	a,(ix-8 )
 	or	 a
 	jr	Z,FileString_StrCmpNoCase_00114
 ;fat_string.c:216: s1++;
-	inc	(ix-5 )
+	inc	(ix-6 )
 	jr	NZ,FileString_StrCmpNoCase_00146
-	inc	(ix-4 )
+	inc	(ix-5 )
 FileString_StrCmpNoCase_00146:
 ;fat_string.c:217: s2++;
-	inc	(ix-3 )
+	inc	(ix-4 )
 	jp	NZ,FileString_StrCmpNoCase_00112
-	inc	(ix-2 )
+	inc	(ix-3 )
 	jp	FileString_StrCmpNoCase_00112
 FileString_StrCmpNoCase_00114:
 ;fat_string.c:219: return 0;
@@ -772,22 +771,22 @@ fatfs_compare_names_00105:
 	push	bc
 	call	_strlen
 	pop	af
-	ld	(ix-3 ),h
-	ld	(ix-4 ),l
+	ld	(ix-1 ),h
+	ld	(ix-2 ),l
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
 	push	hl
 	call	_strlen
 	pop	af
-	ld	(ix-1 ),h
-	ld	(ix-2 ),l
+	ld	(ix-3 ),h
+	ld	(ix-4 ),l
 	pop	de
 	pop	bc
-	ld	a,(ix-2 )
-	sub	 (ix-4 )
+	ld	a,(ix-4 )
+	sub	 (ix-2 )
 	jr	NZ,fatfs_compare_names_00152
-	ld	a,(ix-1 )
-	sub	 (ix-3 )
+	ld	a,(ix-3 )
+	sub	 (ix-1 )
 	jr	Z,fatfs_compare_names_00108
 fatfs_compare_names_00152:
 ;fat_string.c:296: return 0;

@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:43 2017
+; This file was generated Sun Oct 15 00:38:13 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -52,26 +52,26 @@ _ShowSlots:
 ;ui_slot.c:34: PrintEmptyLine();
 	call	_PrintEmptyLine
 ;ui_slot.c:36: for (iSlot = 1; iSlot < SLOTCOUNT; iSlot++ )
-	ld	hl, &0002
+	ld	hl, &0000
 	add	hl,sp
-	ld	(ix-4 ),l
-	ld	(ix-3 ),h
-	ld	a,(ix-4 )
+	ld	(ix-2 ),l
+	ld	(ix-1 ),h
+	ld	a,(ix-2 )
 	ld	(ix-6 ),a
-	ld	a,(ix-3 )
+	ld	a,(ix-1 )
 	ld	(ix-5 ),a
 	ld	(ix-8 ), &01
 	ld	(ix-7 ), &00
-	ld	(ix-2 ), &2E
-	ld	(ix-1 ), &00
+	ld	(ix-4 ), &2E
+	ld	(ix-3 ), &00
 ShowSlots_00105:
 ;ui_slot.c:38: slot = &slots[ iSlot ];
-	ld	a,(ix-2 )
+	ld	a,(ix-4 )
 	add	a,  &00
-	ld	(ix-34 ),a
-	ld	a,(ix-1 )
+	ld	(ix-10 ),a
+	ld	a,(ix-3 )
 	adc	a,  &1D
-	ld	(ix-33 ),a
+	ld	(ix-9 ),a
 ;ui_slot.c:40: Print(" ");
 	ld	hl,__str_ui_slot_1
 	push	hl
@@ -89,8 +89,8 @@ ShowSlots_00105:
 	call	_Print
 	pop	af
 ;ui_slot.c:44: if (slot->DirEnt.size>0)
-	pop	hl
-	push	hl
+	ld	l,(ix-10 )
+	ld	h,(ix-9 )
 	ld	de,  &0011
 	add	hl, de
 	ld	c,(hl)
@@ -105,14 +105,14 @@ ShowSlots_00105:
 	or	c
 	jr	Z,ShowSlots_00102
 ;ui_slot.c:46: z80_memcpy(slotLabel, slot->DirEnt.longName, 16 );
-	ld	a,(ix-34 )
+	ld	a,(ix-10 )
 	add	a,  &15
 	ld	l,a
-	ld	a,(ix-33 )
+	ld	a,(ix-9 )
 	adc	a,  &00
 	ld	h,a
-	ld	e,(ix-4 )
-	ld	d,(ix-3 )
+	ld	e,(ix-2 )
+	ld	d,(ix-1 )
 	ld	bc, &0010
 	push	bc
 	push	hl
@@ -122,10 +122,10 @@ ShowSlots_00105:
 	add	hl,sp
 	ld	sp,hl
 ;ui_slot.c:47: slotLabel[16]=0;
-	ld	a,(ix-4 )
+	ld	a,(ix-2 )
 	add	a,  &10
 	ld	l,a
-	ld	a,(ix-3 )
+	ld	a,(ix-1 )
 	adc	a,  &00
 	ld	h,a
 	ld	(hl), &00
@@ -141,12 +141,12 @@ ShowSlots_00102:
 	call	_PrintEmptyLine
 ShowSlots_00106:
 ;ui_slot.c:36: for (iSlot = 1; iSlot < SLOTCOUNT; iSlot++ )
-	ld	a,(ix-2 )
+	ld	a,(ix-4 )
 	add	a,  &2E
-	ld	(ix-2 ),a
-	ld	a,(ix-1 )
+	ld	(ix-4 ),a
+	ld	a,(ix-3 )
 	adc	a,  &00
-	ld	(ix-1 ),a
+	ld	(ix-3 ),a
 	inc	(ix-8 )
 	jr	NZ,ShowSlots_00119
 	inc	(ix-7 )

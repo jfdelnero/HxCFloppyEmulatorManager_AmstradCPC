@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:39 2017
+; This file was generated Sun Oct 15 00:38:08 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -53,18 +53,18 @@ _fatfs_fat_init:
 ;fat_table.c:68: for (i=0;i<FAT_BUFFERED_SECTORS;i++)
 	ld	hl, &022D
 	add	hl,bc
-	ld	(ix-2 ),l
-	ld	(ix-1 ),h
+	ld	(ix-4 ),l
+	ld	(ix-3 ),h
 	ld	hl, &0000
 	ex	(sp), hl
 fatfs_fat_init_00102:
 ;fat_table.c:71: fs->fat_buffers[i].address = FAT32_INVALID_CLUSTER;
 	ld	a,(ix-6 )
-	ld	(ix-4 ),a
+	ld	(ix-2 ),a
 	ld	a,(ix-5 )
-	ld	(ix-3 ),a
-	ld	c,(ix-4 )
-	ld	b,(ix-3 )
+	ld	(ix-1 ),a
+	ld	c,(ix-2 )
+	ld	b,(ix-1 )
 	ld	l, c
 	ld	h, b
 	add	hl, hl
@@ -78,10 +78,10 @@ fatfs_fat_init_00102:
 	add	hl, hl
 	add	hl, hl
 	ld	a,l
-	add	a, (ix-2 )
+	add	a, (ix-4 )
 	ld	c,a
 	ld	a,h
-	adc	a, (ix-1 )
+	adc	a, (ix-3 )
 	ld	b,a
 	ld	hl, &0200
 	add	hl,bc
@@ -168,12 +168,12 @@ _fatfs_fat_read_sector:
 	ld	(ix-5 ),a
 	ld	a,(ix-6 )
 	add	a,  &2B
-	ld	(ix-4 ),a
+	ld	(ix-2 ),a
 	ld	a,(ix-5 )
 	adc	a,  &02
-	ld	(ix-3 ),a
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	(ix-1 ),a
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	a,(hl)
 	ld	(ix-12 ),a
 	inc	hl
@@ -184,8 +184,8 @@ fatfs_fat_read_sector_00108:
 ;fat_table.c:100: last->next = NULL;
 	ld	hl, &0206
 	add	hl,bc
-	ld	(ix-2 ),l
-	ld	(ix-1 ),h
+	ld	(ix-4 ),l
+	ld	(ix-3 ),h
 ;fat_table.c:89: while (pcur)
 	ld	a,(ix-11 )
 	or	(ix-12 )
@@ -234,8 +234,8 @@ fatfs_fat_read_sector_00153:
 	or	c
 	jr	Z,fatfs_fat_read_sector_00104
 ;fat_table.c:100: last->next = NULL;
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	xor	 a
 	ld	(hl), a
 	inc	hl
@@ -243,8 +243,8 @@ fatfs_fat_read_sector_00153:
 	jr	fatfs_fat_read_sector_00107
 fatfs_fat_read_sector_00104:
 ;fat_table.c:103: fs->fat_buffer_head = NULL;
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	xor	 a
 	ld	(hl), a
 	inc	hl
@@ -279,19 +279,19 @@ fatfs_fat_read_sector_00112:
 	inc	sp
 	push	bc
 ;fat_table.c:118: pcur->next = fs->fat_buffer_head;
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	d,(hl)
 	inc	hl
 	ld	e,(hl)
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl),d
 	inc	hl
 	ld	(hl),e
 ;fat_table.c:119: fs->fat_buffer_head = pcur;
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	(hl),c
 	inc	hl
 	ld	(hl),b
@@ -444,8 +444,9 @@ _fatfs_fat_purge:
 	inc	hl
 	ld	d,(hl)
 ;fat_table.c:153: while (pcur)
-	ld	(ix-2 ),c
-	ld	(ix-1 ),b
+	inc	sp
+	inc	sp
+	push	bc
 fatfs_fat_purge_00107:
 	ld	a,d
 	or	e
@@ -461,16 +462,16 @@ fatfs_fat_purge_00107:
 	or	b
 	jr	Z,fatfs_fat_purge_00106
 ;fat_table.c:158: if (fs->disk_io.write_sector)
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	pop	hl
+	push	hl
 	ld	bc,  &001D
 	add	hl, bc
 	ld	a,(hl)
-	ld	(ix-4 ),a
+	ld	(ix-2 ),a
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-3 ), a
-	or	(ix-4 )
+	ld	(ix-1 ), a
+	or	(ix-2 )
 	jr	Z,fatfs_fat_purge_00104
 ;fat_table.c:159: if (!fs->disk_io.write_sector(pcur->address, pcur->sector))
 	ld	l, e
@@ -490,8 +491,8 @@ fatfs_fat_purge_00107:
 	push	de
 	push	hl
 	push	bc
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	call	__sdcc_call_hl
 	pop	af
 	pop	af
@@ -577,34 +578,34 @@ fatfs_find_next_cluster_00122:
 	ld	a,(ix+5 )
 	ld	(ix-1 ),a
 	ld	a,(ix-2 )
-	ld	(ix-8 ),a
+	ld	(ix-4 ),a
 	ld	a,(ix-1 )
-	ld	(ix-7 ),a
-	ld	l,(ix-8 )
-	ld	h,(ix-7 )
+	ld	(ix-3 ),a
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	de,  &0009
 	add	hl, de
+	ld	a,(hl)
+	ld	(ix-8 ),a
+	inc	hl
+	ld	a,(hl)
+	ld	(ix-7 ),a
+	inc	hl
 	ld	a,(hl)
 	ld	(ix-6 ),a
 	inc	hl
 	ld	a,(hl)
 	ld	(ix-5 ),a
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-4 ),a
-	inc	hl
-	ld	a,(hl)
-	ld	(ix-3 ),a
-	ld	a,(ix-6 )
+	ld	a,(ix-8 )
 	add	a, (ix-14 )
 	ld	e,a
-	ld	a,(ix-5 )
+	ld	a,(ix-7 )
 	adc	a, (ix-13 )
 	ld	d,a
-	ld	a,(ix-4 )
+	ld	a,(ix-6 )
 	adc	a, (ix-12 )
 	ld	l,a
-	ld	a,(ix-3 )
+	ld	a,(ix-5 )
 	adc	a, (ix-11 )
 	ld	h,a
 	push	hl
@@ -816,21 +817,21 @@ _fatfs_count_free_clusters:
 	ld	(ix-11 ),a
 ;fat_table.c:370: for (i = 0; i < fs->fat_sectors; i++)
 	ld	a,(ix+4 )
-	ld	(ix-2 ),a
-	ld	a,(ix+5 )
-	ld	(ix-1 ),a
-	ld	a,(ix-2 )
 	ld	(ix-6 ),a
-	ld	a,(ix-1 )
+	ld	a,(ix+5 )
 	ld	(ix-5 ),a
+	ld	a,(ix-6 )
+	ld	(ix-2 ),a
+	ld	a,(ix-5 )
+	ld	(ix-1 ),a
 	xor	 a
-	ld	(ix-22 ),a
-	ld	(ix-21 ),a
-	ld	(ix-20 ),a
-	ld	(ix-19 ),a
+	ld	(ix-18 ),a
+	ld	(ix-17 ),a
+	ld	(ix-16 ),a
+	ld	(ix-15 ),a
 fatfs_count_free_clusters_00110:
-	ld	l,(ix-6 )
-	ld	h,(ix-5 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	de,  &0013
 	add	hl, de
 	ld	d,(hl)
@@ -840,19 +841,19 @@ fatfs_count_free_clusters_00110:
 	ld	b,(hl)
 	inc	hl
 	ld	h,(hl)
-	ld	a,(ix-22 )
+	ld	a,(ix-18 )
 	sub	 d
-	ld	a,(ix-21 )
+	ld	a,(ix-17 )
 	sbc	a, e
-	ld	a,(ix-20 )
+	ld	a,(ix-16 )
 	sbc	a, b
-	ld	a,(ix-19 )
+	ld	a,(ix-15 )
 	sbc	a, h
 	jp	NC,fatfs_count_free_clusters_00106
 ;fat_table.c:373: pbuf = fatfs_fat_read_sector(fs, fs->fat_begin_lba + i);
-	ld	a,(ix-2 )
+	ld	a,(ix-6 )
 	ld	(ix-4 ),a
-	ld	a,(ix-1 )
+	ld	a,(ix-5 )
 	ld	(ix-3 ),a
 	ld	l,(ix-4 )
 	ld	h,(ix-3 )
@@ -870,16 +871,16 @@ fatfs_count_free_clusters_00110:
 	ld	a,(hl)
 	ld	(ix-7 ),a
 	ld	a,(ix-10 )
-	add	a, (ix-22 )
+	add	a, (ix-18 )
 	ld	(ix-10 ),a
 	ld	a,(ix-9 )
-	adc	a, (ix-21 )
+	adc	a, (ix-17 )
 	ld	(ix-9 ),a
 	ld	a,(ix-8 )
-	adc	a, (ix-20 )
+	adc	a, (ix-16 )
 	ld	(ix-8 ),a
 	ld	a,(ix-7 )
-	adc	a, (ix-19 )
+	adc	a, (ix-15 )
 	ld	(ix-7 ),a
 	ld	l,(ix-8 )
 	ld	h,(ix-7 )
@@ -887,8 +888,8 @@ fatfs_count_free_clusters_00110:
 	ld	l,(ix-10 )
 	ld	h,(ix-9 )
 	push	hl
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-6 )
+	ld	h,(ix-5 )
 	push	hl
 	call	_fatfs_fat_read_sector
 	pop	af
@@ -910,14 +911,16 @@ fatfs_count_free_clusters_00110:
 	ld	bc, 4
 	ldir
 	xor	 a
-	ld	(ix-18 ),a
-	ld	(ix-17 ),a
-	ld	(ix-16 ),a
-	ld	(ix-15 ),a
+	ld	(ix-22 ),a
+	ld	(ix-21 ),a
+	ld	(ix-20 ),a
+	ld	(ix-19 ),a
 fatfs_count_free_clusters_00107:
 ;fat_table.c:379: if (FAT32_GET_32BIT_WORD(pbuf, (UINT16)j) == 0)
-	ld	l,(ix-18 )
-	ld	h,(ix-17 )
+	pop	bc
+	pop	hl
+	push	hl
+	push	bc
 	pop	de
 	push	de
 	add	hl,de
@@ -943,26 +946,26 @@ fatfs_count_free_clusters_00107:
 fatfs_count_free_clusters_00134:
 fatfs_count_free_clusters_00104:
 ;fat_table.c:382: j += 4;
-	ld	a,(ix-18 )
+	ld	a,(ix-22 )
 	add	a,  &04
-	ld	(ix-18 ),a
-	ld	a,(ix-17 )
+	ld	(ix-22 ),a
+	ld	a,(ix-21 )
 	adc	a,  &00
-	ld	(ix-17 ),a
-	ld	a,(ix-16 )
+	ld	(ix-21 ),a
+	ld	a,(ix-20 )
 	adc	a,  &00
-	ld	(ix-16 ),a
-	ld	a,(ix-15 )
+	ld	(ix-20 ),a
+	ld	a,(ix-19 )
 	adc	a,  &00
-	ld	(ix-15 ),a
+	ld	(ix-19 ),a
 ;fat_table.c:377: for (j = 0; j < FAT_SECTOR_SIZE; )
-	ld	a,(ix-17 )
+	ld	a,(ix-21 )
 	and	  &FE
 	jr	NZ,fatfs_count_free_clusters_00135
-	ld	a,(ix-16 )
+	ld	a,(ix-20 )
 	or	 a
 	jr	NZ,fatfs_count_free_clusters_00135
-	ld	a,(ix-15 )
+	ld	a,(ix-19 )
 	or	 a
 	jr	Z,fatfs_count_free_clusters_00107
 fatfs_count_free_clusters_00135:
@@ -974,13 +977,13 @@ fatfs_count_free_clusters_00135:
 	add	hl, sp
 	ld	bc, 4
 	ldir
-	inc	(ix-22 )
+	inc	(ix-18 )
 	jp	NZ,fatfs_count_free_clusters_00110
-	inc	(ix-21 )
+	inc	(ix-17 )
 	jp	NZ,fatfs_count_free_clusters_00110
-	inc	(ix-20 )
+	inc	(ix-16 )
 	jp	NZ,fatfs_count_free_clusters_00110
-	inc	(ix-19 )
+	inc	(ix-15 )
 	jp	fatfs_count_free_clusters_00110
 fatfs_count_free_clusters_00106:
 ;fat_table.c:386: return count;

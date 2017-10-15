@@ -11,6 +11,19 @@ main:
 	ld bc, &BD00+0
 	out (c), c
 
+	ld bc, &0000
+	call &BC38
+
+	xor a
+SetBlackPaletteLoop:
+	ld bc, 0
+	push af
+	call &BC32
+	pop af
+	inc a
+	cp 4
+	jr nz, SetBlackPaletteLoop
+
 	ld hl, TinyFont
 	ld de, TINY_FONT_BUFFER
 	call BitBuster_Unpack

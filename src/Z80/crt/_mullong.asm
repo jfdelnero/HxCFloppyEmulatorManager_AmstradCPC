@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.3.0 8604 (May 11 2013) (MINGW32)
-; This file was generated Sat Oct 14 23:36:23 2017
+; This file was generated Sun Oct 15 00:37:51 2017
 ;--------------------------------------------------------
 	
 ;--------------------------------------------------------
@@ -43,18 +43,18 @@ __mullong:
 ;_mullong.c:707: t.i.hi = bcast(a)->b.b0 * bcast(b)->b.b2;           // A
 	ld	hl, &0000
 	add	hl,sp
-	ld	(ix-2 ),l
-	ld	(ix-1 ),h
+	ld	(ix-4 ),l
+	ld	(ix-3 ),h
 	inc	hl
 	inc	hl
 	ld	c,l
 	ld	b,h
 	ld	hl, &0012
 	add	hl,sp
-	ld	(ix-4 ),l
-	ld	(ix-3 ),h
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	(ix-2 ),l
+	ld	(ix-1 ),h
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	e,(hl)
 	ld	hl, &0016
 	add	hl,sp
@@ -84,8 +84,8 @@ _mullong_00104:
 	ld	a,d
 	ld	(bc),a
 ;_mullong.c:708: t.i.lo = bcast(a)->b.b0 * bcast(b)->b.b0;           // A
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	e,(hl)
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
@@ -100,8 +100,8 @@ _mullong_00105:
 _mullong_00106:
 	djnz	_mullong_00105
 	ex	de,hl
-	ld	l,(ix-2 )
-	ld	h,(ix-1 )
+	ld	l,(ix-4 )
+	ld	h,(ix-3 )
 	ld	(hl),e
 	inc	hl
 	ld	(hl),d
@@ -111,8 +111,8 @@ _mullong_00106:
 	ex	de, hl
 	ld	a,(de)
 	ld	c,a
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	inc	hl
 	inc	hl
 	inc	hl
@@ -138,8 +138,8 @@ _mullong_00108:
 ;_mullong.c:710: t.b.b3 += bcast(a)->b.b2 * bcast(b)->b.b1;          // F
 	ld	a,(de)
 	ld	c,a
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	inc	hl
 	inc	hl
 	ld	b,(hl)
@@ -171,19 +171,19 @@ _mullong_00110:
 	ld	c,(hl)
 	inc	hl
 	ld	b,(hl)
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	inc	hl
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-2 ),a
+	ld	(ix-4 ),a
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
 	ld	a,(hl)
 	push	de
 	push	bc
 	ld	e,a
-	ld	h,(ix-2 )
+	ld	h,(ix-4 )
 	ld	l,  &00
 	ld	d, l
 	ld	b,  &08
@@ -209,11 +209,11 @@ _mullong_00112:
 	ld	c,(hl)
 	inc	hl
 	ld	b,(hl)
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	inc	hl
 	ld	a,(hl)
-	ld	(ix-2 ),a
+	ld	(ix-4 ),a
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
 	inc	hl
@@ -221,7 +221,7 @@ _mullong_00112:
 	push	de
 	push	bc
 	ld	e,a
-	ld	h,(ix-2 )
+	ld	h,(ix-4 )
 	ld	l,  &00
 	ld	d, l
 	ld	b,  &08
@@ -242,14 +242,14 @@ _mullong_00114:
 	ld	a,b
 	ld	(de),a
 ;_mullong.c:715: bcast(a)->bi.b3 = bcast(a)->b.b1 * bcast(b)->b.b2;  // C
-	ld	e,(ix-4 )
-	ld	d,(ix-3 )
+	ld	e,(ix-2 )
+	ld	d,(ix-1 )
 	inc	de
 	inc	de
 	inc	de
 	ld	c,e
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	inc	hl
 	ld	e,(hl)
 	ld	l,(ix-6 )
@@ -273,12 +273,12 @@ _mullong_00116:
 	ld	h, d
 	ld	(hl),e
 ;_mullong.c:716: bcast(a)->bi.i12 = bcast(a)->b.b1 * bcast(b)->b.b0; // C
-	ld	e,(ix-4 )
-	ld	d,(ix-3 )
+	ld	e,(ix-2 )
+	ld	d,(ix-1 )
 	inc	de
 	ld	c,e
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	inc	hl
 	ld	e,(hl)
 	ld	l,(ix-6 )
@@ -309,8 +309,8 @@ _mullong_00118:
 	inc	de
 	inc	de
 	ld	c,e
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	e,(hl)
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
@@ -338,8 +338,8 @@ _mullong_00120:
 	ld	d,(ix-5 )
 	inc	de
 	ld	c,e
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	e,(hl)
 	ld	l,(ix-6 )
 	ld	h,(ix-5 )
@@ -368,8 +368,8 @@ _mullong_00122:
 	ld	h,(ix-5 )
 	ld	(hl), &00
 ;_mullong.c:722: bcast(a)->bi.b0 = 0;                                // C
-	ld	l,(ix-4 )
-	ld	h,(ix-3 )
+	ld	l,(ix-2 )
+	ld	h,(ix-1 )
 	ld	(hl), &00
 ;_mullong.c:723: t.l += a;
 	ld	hl, &0000
